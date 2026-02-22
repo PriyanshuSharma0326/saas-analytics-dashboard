@@ -1,6 +1,6 @@
 # SaaS Analytics Dashboard
 
-![App screenshot](public/site-screentshot.png)
+![App screenshot](./public/site-screenshot.png)
 
 A modern SaaS-style analytics dashboard built with React, Redux Toolkit, Tailwind CSS, and Recharts.
 
