@@ -53,19 +53,19 @@ This project simulates a production-style SaaS analytics interface with dynamic 
 
 ```bash
 npm install
-```bash
+```
 
 ### Run development server
 
 ```bash
 npm run dev
-```bash
+```
 
 ### Build for production
 
 ```bash
 npm run build
-```bash
+```
 
 ### Project Structure
 
@@ -92,7 +92,7 @@ src/
 
     hooks/
         useCountUp.js
-```bash
+```
 
 ### Data Model
 
