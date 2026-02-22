@@ -1,5 +1,7 @@
 # SaaS Analytics Dashboard
 
+![App screenshot](public//media//site-screentshot.png)
+
 A modern SaaS-style analytics dashboard built with React, Redux Toolkit, Tailwind CSS, and Recharts.
 
 This project simulates a production-style SaaS analytics interface with dynamic filtering, data visualization, and reporting workflows.
