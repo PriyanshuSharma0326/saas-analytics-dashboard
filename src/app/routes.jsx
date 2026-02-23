@@ -8,6 +8,8 @@ import Reports from "../pages/Reports";
 import Analytics from "../pages/Analytics";
 import Settings from "../pages/Settings";
 import Login from "../pages/Login";
+import Plans from "../pages/Plans";
+import Checkout from "../pages/Checkout";
 
 const AppRoutes = () => {
     return (
@@ -15,49 +17,49 @@ const AppRoutes = () => {
             <Routes>
                 <Route path="/login" element={<Login />} />
 
-                <Route
-                    path="/"
-                    element={
-                        <ProtectedRoute>
-                            <Layout>
-                                <Dashboard />
-                            </Layout>
-                        </ProtectedRoute>
-                    }
-                />
+                <Route path="/" element={
+                    <ProtectedRoute>
+                        <Layout>
+                            <Dashboard />
+                        </Layout>
+                    </ProtectedRoute>
+                } />
 
-                <Route
-                    path="/reports"
-                    element={
-                        <ProtectedRoute>
-                            <Layout>
-                                <Reports />
-                            </Layout>
-                        </ProtectedRoute>
-                    }
-                />
+                <Route path="/reports" element={
+                    <ProtectedRoute>
+                        <Layout>
+                            <Reports />
+                        </Layout>
+                    </ProtectedRoute>
+                } />
 
-                <Route
-                    path="/analytics"
-                    element={
-                        <ProtectedRoute>
-                            <Layout>
-                                <Analytics />
-                            </Layout>
-                        </ProtectedRoute>
-                    }
-                />
+                <Route path="/analytics" element={
+                    <ProtectedRoute>
+                        <Layout>
+                            <Analytics />
+                        </Layout>
+                    </ProtectedRoute>
+                } />
 
-                <Route
-                    path="/settings"
-                    element={
-                        <ProtectedRoute>
-                            <Layout>
-                                <Settings />
-                            </Layout>
-                        </ProtectedRoute>
-                    }
-                />
+                <Route path="/settings" element={
+                    <ProtectedRoute>
+                        <Layout>
+                            <Settings />
+                        </Layout>
+                    </ProtectedRoute>
+                } />
+
+                <Route path="/plans" element={
+                    <ProtectedRoute>
+                        <Plans />
+                    </ProtectedRoute>
+                } />
+
+                <Route path="/checkout" element={
+                    <ProtectedRoute>
+                        <Checkout />
+                    </ProtectedRoute>
+                } />
             </Routes>
         </Router>
     );

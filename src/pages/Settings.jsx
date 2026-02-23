@@ -21,7 +21,7 @@ const Settings = () => {
 
     if (loading) {
         return (
-            <main className="p-6">
+            <main className="p-4 sm:p-6">
                 <Skeleton className="h-16 mb-6" />
                 <Skeleton className="h-40" />
             </main>
@@ -29,30 +29,26 @@ const Settings = () => {
     }
 
     return (
-        <main className="p-6">
+        <main className="p-4 sm:p-6">
             <SectionCard
                 title="Settings"
                 description="Manage your workspace preferences"
             />
 
-            <div className="space-y-6">
-                <div className="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+            <div className="space-y-4 sm:space-y-6">
+                <div className="bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-slate-200">
                     <h3 className="text-sm font-medium text-slate-700 mb-4">
                         Profile Information
                     </h3>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <Input
                             label="Full Name"
                             value={profile.name}
                             onChange={(e) =>
-                                setProfile(prev => ({
-                                    ...prev,
-                                    name: e.target.value
-                                }))
+                                setProfile(prev => ({ ...prev, name: e.target.value }))
                             }
                         />
-
                         <Input
                             label="Email Address"
                             value={profile.email}
@@ -61,7 +57,7 @@ const Settings = () => {
                     </div>
                 </div>
 
-                <div className="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
+                <div className="bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-slate-200">
                     <h3 className="text-sm font-medium text-slate-700 mb-4">
                         Preferences
                     </h3>
@@ -71,10 +67,7 @@ const Settings = () => {
                             label="Enable Notifications"
                             checked={preferences.notifications}
                             onChange={() =>
-                                setPreferences(prev => ({
-                                    ...prev,
-                                    notifications: !prev.notifications
-                                }))
+                                setPreferences(prev => ({ ...prev, notifications: !prev.notifications }))
                             }
                         />
 
@@ -82,10 +75,7 @@ const Settings = () => {
                             label="Dark Mode"
                             checked={preferences.darkMode}
                             onChange={() => {
-                                setPreferences(prev => ({
-                                    ...prev,
-                                    darkMode: !prev.darkMode
-                                }));
+                                setPreferences(prev => ({ ...prev, darkMode: !prev.darkMode }));
                                 toggleDarkMode();
                             }}
                         />
@@ -94,15 +84,11 @@ const Settings = () => {
                             label="Automatic Updates"
                             checked={preferences.autoUpdates}
                             onChange={() =>
-                                setPreferences(prev => ({
-                                    ...prev,
-                                    autoUpdates: !prev.autoUpdates
-                                }))
+                                setPreferences(prev => ({ ...prev, autoUpdates: !prev.autoUpdates }))
                             }
                         />
                     </div>
                 </div>
-
             </div>
         </main>
     );

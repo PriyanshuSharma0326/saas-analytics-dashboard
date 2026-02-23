@@ -51,7 +51,7 @@ const SearchIcon = () => (
     </svg>
 );
 
-const Header = () => {
+const Header = ({ onMenuClick }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const { user } = useAuth();
@@ -92,8 +92,18 @@ const Header = () => {
 
     return (
         <header className="bg-white backdrop-blur-md border-b border-indigo-100 sticky top-0 z-20">
-            <div className="h-[68px] px-6 flex items-center justify-between gap-4">
+            <div className="h-[68px] px-4 sm:px-6 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 min-w-0">
+
+                    <button
+                        onClick={onMenuClick}
+                        className="lg:hidden w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-500 hover:bg-indigo-50 hover:border-indigo-200 hover:text-indigo-500 transition-all duration-150 shrink-0"
+                    >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+
                     <div className="min-w-0">
                         <div className="flex items-center gap-1.5 mb-0.5">
                             <span className="text-[10px] font-medium text-indigo-400 uppercase tracking-widest">
@@ -185,7 +195,6 @@ const Header = () => {
                                 </p>
                             </div>
 
-                            {/* Chevron */}
                             <svg
                                 className={`hidden lg:block w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
                                 fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
@@ -195,7 +204,7 @@ const Header = () => {
                         </button>
 
                         {open && (
-                            <div className="absolute right-0 top-[calc(100%+10px)] w-56 bg-white border border-indigo-100 rounded-xl shadow-lg shadow-slate-200/80 z-50 overflow-hidden">
+                            <div className="absolute right-0 top-[calc(100%+10px)] w-56 bg-white border border-indigo-100 rounded-xl shadow-lg shadow-slate-200/80 dark:shadow-slate-700/40 z-50 overflow-hidden">
                                 <div className="flex items-center gap-3 px-4 py-3 border-b border-slate-100">
                                     <div className="w-8 h-8 rounded-lg bg-indigo-500 text-white flex items-center justify-center overflow-hidden shrink-0">
                                         {user?.photoURL ? (
@@ -216,6 +225,7 @@ const Header = () => {
                                         <p className="text-xs font-semibold text-slate-800 truncate">
                                             {user?.displayName || "User"}
                                         </p>
+
                                         <p className="text-[10px] text-slate-400 truncate">
                                             {user?.email || ""}
                                         </p>

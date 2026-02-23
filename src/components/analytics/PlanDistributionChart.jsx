@@ -14,8 +14,8 @@ const PlanDistributionChart = ({ data = [], selectedPlan }) => {
             <PieChart>
                 <Pie
                     data={data}
-                    innerRadius={70}
-                    outerRadius={100}
+                    innerRadius="45%"
+                    outerRadius="65%"
                     paddingAngle={3}
                     dataKey="value"
                 >
@@ -33,6 +33,7 @@ const PlanDistributionChart = ({ data = [], selectedPlan }) => {
                 </Pie>
 
                 <Tooltip content={<CustomTooltip />} />
+
                 <Legend content={<CustomLegend />} verticalAlign="bottom" height={36} />
             </PieChart>
         </ResponsiveContainer>
@@ -47,6 +48,7 @@ const CustomTooltip = ({ active, payload }) => {
             <p className="text-slate-500 dark:text-gray-400 mb-1">
                 {payload[0].name}
             </p>
+
             <p className="text-slate-800 dark:text-gray-100 font-semibold">
                 {payload[0].value}% Customers
             </p>
@@ -63,6 +65,7 @@ const CustomLegend = ({ payload }) => {
                         className="inline-block w-2.5 h-2.5 rounded-full"
                         style={{ backgroundColor: entry.color }}
                     />
+
                     <span className="text-xs text-slate-600 dark:text-gray-400">
                         {entry.value}
                     </span>

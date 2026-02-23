@@ -1,6 +1,6 @@
 const SectionCard = ({ title, description }) => (
     <div className="mb-6">
-        <h2 className="text-2xl font-semibold tracking-tight text-slate-900">
+        <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-slate-900">
             {title}
         </h2>
 

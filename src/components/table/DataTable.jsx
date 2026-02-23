@@ -11,20 +11,18 @@ const DataTable = ({ data }) => {
     const handleSort = (key) => {
         if (sortKey === key) {
             setSortOrder(sortOrder === "asc" ? "desc" : "asc");
-        } else {
+        }
+        else {
             setSortKey(key);
             setSortOrder("asc");
         }
-
         setCurrentPage(1);
     };
 
     const sortedData = [...data].sort((a, b) => {
         if (!sortKey) return 0;
-
         if (a[sortKey] < b[sortKey]) return sortOrder === "asc" ? -1 : 1;
         if (a[sortKey] > b[sortKey]) return sortOrder === "asc" ? 1 : -1;
-
         return 0;
     });
 
@@ -37,72 +35,53 @@ const DataTable = ({ data }) => {
 
     return (
         <div>
-            <table className="w-full text-sm">
-                <thead>
-                    <tr className="text-left text-slate-500 border-b border-slate-200">
-                        <th
-                            className="pb-3 cursor-pointer"
-                            onClick={() => handleSort("name")}
-                        >
-                            Company
-                        </th>
+            <div className="overflow-x-auto">
+                <table className="w-full text-sm min-w-[480px]">
+                    <thead>
+                        <tr className="text-left text-slate-500 border-b border-slate-200">
+                            <th className="pb-3 cursor-pointer" onClick={() => handleSort("name")}>
+                                Company
+                            </th>
 
-                        <th
-                            className="pb-3 cursor-pointer"
-                            onClick={() => handleSort("plan")}
-                        >
-                            Plan
-                        </th>
+                            <th className="pb-3 cursor-pointer" onClick={() => handleSort("plan")}>
+                                Plan
+                            </th>
 
-                        <th
-                            className="pb-3 cursor-pointer"
-                            onClick={() => handleSort("revenue")}
-                        >
-                            Revenue
-                        </th>
+                            <th className="pb-3 cursor-pointer" onClick={() => handleSort("revenue")}>
+                                Revenue
+                            </th>
 
-                        <th className="pb-3">Status</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {paginatedData.length === 0 ? (
-                        <tr>
-                            <td colSpan="4">
-                                <div className="flex flex-col items-center py-6 text-slate-500">
-                                    <p className="text-sm font-medium">
-                                        No results found
-                                    </p>
-
-                                    <p className="text-xs text-slate-400 mt-1">
-                                        Try adjusting your filters
-                                    </p>
-                                </div>
-                            </td>
+                            <th className="pb-3">Status</th>
                         </tr>
-                    ) : (
-                        paginatedData.map((item) => (
-                            <tr key={item.id} className="border-b border-slate-200 last:border-none">
-                                <td className="py-3 text-slate-900">
-                                    {item.name}
-                                </td>
+                    </thead>
 
-                                <td className="py-3 text-slate-600">
-                                    {item.plan}
-                                </td>
+                    <tbody>
+                        {paginatedData.length === 0 ? (
+                            <tr>
+                                <td colSpan="4">
+                                    <div className="flex flex-col items-center py-6 text-slate-500">
+                                        <p className="text-sm font-medium">No results found</p>
 
-                                <td className="py-3 text-slate-900">
-                                    ₹{item.revenue.toLocaleString()}
-                                </td>
-
-                                <td className="py-3">
-                                    <StatusBadge status={item.status} />
+                                        <p className="text-xs text-slate-400 mt-1">Try adjusting your filters</p>
+                                    </div>
                                 </td>
                             </tr>
-                        ))
-                    )}
-                </tbody>
-            </table>
+                        ) : (
+                            paginatedData.map((item) => (
+                                <tr key={item.id} className="border-b border-slate-200 last:border-none">
+                                    <td className="py-3 text-slate-900">{item.name}</td>
+
+                                    <td className="py-3 text-slate-600">{item.plan}</td>
+
+                                    <td className="py-3 text-slate-900">₹{item.revenue.toLocaleString()}</td>
+
+                                    <td className="py-3"><StatusBadge status={item.status} /></td>
+                                </tr>
+                            ))
+                        )}
+                    </tbody>
+                </table>
+            </div>
 
             <div className="flex justify-between items-center mt-4">
                 <button

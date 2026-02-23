@@ -112,13 +112,12 @@ const Dashboard = () => {
                 />
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mb-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                 <div className="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
                     <h3 className="text-sm font-medium text-slate-600 mb-4">
                         Revenue Trend
                     </h3>
-
-                    <div className="h-64">
+                    <div className="h-56 sm:h-64">
                         {loading ? (
                             <Skeleton className="h-full" />
                         ) : (
@@ -134,8 +133,7 @@ const Dashboard = () => {
                     <h3 className="text-sm font-medium text-slate-600 mb-4">
                         Customer Growth
                     </h3>
-
-                    <div className="h-64">
+                    <div className="h-56 sm:h-64">
                         {loading ? (
                             <Skeleton className="h-full" />
                         ) : (

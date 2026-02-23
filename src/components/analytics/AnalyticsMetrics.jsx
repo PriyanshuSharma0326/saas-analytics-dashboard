@@ -3,7 +3,7 @@ import useCountUp from "../../hooks/useCountUp";
 
 const AnalyticsMetrics = () => {
     return (
-        <div className="grid grid-cols-5 gap-4 mb-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
             {analyticsMetrics.map((metric) => (
                 <MetricItem key={metric.title} metric={metric} />
             ))}
@@ -35,21 +35,10 @@ const MetricItem = ({ metric }) => {
     const numericValue = extractNumber(metric.value);
     const decimals = getDecimals(metric.value);
 
-    const animatedValue = useCountUp(
-        numericValue,
-        800,
-        decimals
-    );
+    const animatedValue = useCountUp(numericValue, 800, decimals);
 
     return (
-        <div
-            className="
-                bg-white rounded-xl p-4
-                shadow-sm border border-slate-200
-                transition-all duration-300 ease-out
-                hover:shadow-md hover:-translate-y-0.5
-            "
-        >
+        <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-200 transition-all duration-300 ease-out hover:shadow-md hover:-translate-y-0.5">
             <p className="text-xs text-slate-500">
                 {metric.title}
             </p>
@@ -58,13 +47,7 @@ const MetricItem = ({ metric }) => {
                 {formatValue(metric.value, animatedValue)}
             </h3>
 
-            <p
-                className={`text-xs mt-1 font-medium ${
-                    metric.positive
-                        ? "text-emerald-600"
-                        : "text-red-500"
-                }`}
-            >
+            <p className={`text-xs mt-1 font-medium ${metric.positive ? "text-emerald-600" : "text-red-500"}`}>
                 {metric.change}
             </p>
         </div>

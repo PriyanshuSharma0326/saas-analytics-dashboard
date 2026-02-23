@@ -1,4 +1,6 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { usePlan } from "../../context/PlanContext";
+import Icon from '../../assets/favicon.svg';
 
 const navItems = [
     {
@@ -40,19 +42,43 @@ const navItems = [
     },
 ];
 
-const Sidebar = () => {
+const PLAN_LABELS = {
+    basic: "Free Plan",
+    premium: "Premium",
+    super_premium: "Super Premium",
+};
+
+const PLAN_SUBTITLES = {
+    basic: "Upgrade for more features",
+    premium: "Half data unlocked",
+    super_premium: "Full access enabled ✓",
+};
+
+const Sidebar = ({ onClose }) => {
+    const { currentPlan } = usePlan();
+    const isUpgraded = currentPlan !== "basic";
+
     return (
-        <aside className="w-56 bg-white border-r border-indigo-100 flex flex-col shrink-0">
+        <aside className="w-56 h-full bg-white border-r border-indigo-100 flex flex-col shrink-0">
             <div className="h-[69px] flex items-center px-5 border-b border-indigo-100 gap-3 shrink-0">
                 <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center shadow-sm shrink-0">
-                    <span className="text-white font-bold text-sm">S</span>
+                    <img src={Icon} alt="" />
                 </div>
 
-                <div>
+                <div className="flex-1">
                     <p className="text-[13px] font-bold text-slate-800 leading-tight tracking-tight">SaaS</p>
 
                     <p className="text-[10px] text-slate-400 leading-tight font-medium">Dashboard</p>
                 </div>
+
+                <button
+                    onClick={onClose}
+                    className="lg:hidden w-7 h-7 flex items-center justify-center rounded-lg text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors shrink-0"
+                >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
             </div>
 
             <nav className="flex flex-col flex-1 p-3 gap-0.5">
@@ -65,6 +91,7 @@ const Sidebar = () => {
                         key={to}
                         to={to}
                         end={to === "/"}
+                        onClick={onClose}
                         className={({ isActive }) =>
                             `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 group
                             ${isActive
@@ -90,21 +117,30 @@ const Sidebar = () => {
             </nav>
 
             <div className="p-3 border-t border-indigo-100">
-                <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-indigo-50 border border-indigo-100">
-                    <div className="w-6 h-6 rounded-md bg-indigo-600 flex items-center justify-center shrink-0">
-                        <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
+                <Link to='/plans' className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg bg-indigo-50 border border-indigo-100">
+                    <div className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 ${isUpgraded ? "bg-emerald-500" : "bg-indigo-600"}`}>
+                        {isUpgraded ? (
+                            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        ) : (
+                            <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                        )}
                     </div>
 
                     <div className="min-w-0">
-                        <p className="text-[10px] font-semibold text-indigo-700 leading-tight">Free Plan</p>
+                        <p className="text-[10px] font-semibold text-indigo-700 leading-tight">
+                            {PLAN_LABELS[currentPlan]}
+                        </p>
 
-                        <p className="text-[9px] text-indigo-400 leading-tight truncate">Upgrade for more features</p>
+                        <p className="text-[9px] text-indigo-400 leading-tight truncate">
+                            {PLAN_SUBTITLES[currentPlan]}
+                        </p>
                     </div>
-                </div>
+                </Link>
             </div>
-
         </aside>
     );
 };
