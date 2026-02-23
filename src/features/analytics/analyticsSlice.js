@@ -1,10 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchRevenueData, fetchUserGrowthData } from "../../services/mockApi";
+import {
+    fetchPlanDistributionData,
+    fetchRevenueData,
+    fetchRevenueUsersData,
+    fetchUserGrowthData
+} from "../../services/mockApi";
 
 const initialState = {
     metrics: {
         revenue: [],
         growth: []
+    },
+    analytics: {
+        revenue: [],
+        revenueUsersData: [],
+        planDistributionData: []
     },
     loading: false,
     error: null
@@ -19,14 +29,32 @@ export const loadDashboardData = () => async (dispatch) => {
             fetchUserGrowthData()
         ]);
 
+        dispatch(dashboardSuccess({ revenue, growth }));
+    } catch {
+        dispatch(fetchError("Failed to load dashboard data"));
+    }
+};
+
+export const loadAnalyticsData = () => async (dispatch) => {
+    try {
+        dispatch(fetchStart());
+
+        const [revenue, revenueUsersData, planDistributionData] =
+            await Promise.all([
+                fetchRevenueData(),
+                fetchRevenueUsersData(),
+                fetchPlanDistributionData()
+            ]);
+
         dispatch(
-            fetchSuccess({
+            analyticsSuccess({
                 revenue,
-                growth
+                revenueUsersData,
+                planDistributionData
             })
         );
-    } catch (error) {
-        dispatch(fetchError("Failed to load dashboard data"));
+    } catch {
+        dispatch(fetchError("Failed to load analytics data"));
     }
 };
 
@@ -38,10 +66,17 @@ const analyticsSlice = createSlice({
             state.loading = true;
             state.error = null;
         },
-        fetchSuccess: (state, action) => {
+
+        dashboardSuccess: (state, action) => {
             state.loading = false;
             state.metrics = action.payload;
         },
+
+        analyticsSuccess: (state, action) => {
+            state.loading = false;
+            state.analytics = action.payload;
+        },
+
         fetchError: (state, action) => {
             state.loading = false;
             state.error = action.payload;
@@ -49,7 +84,11 @@ const analyticsSlice = createSlice({
     }
 });
 
-export const { fetchStart, fetchSuccess, fetchError } =
-    analyticsSlice.actions;
+export const {
+    fetchStart,
+    dashboardSuccess,
+    analyticsSuccess,
+    fetchError
+} = analyticsSlice.actions;
 
 export default analyticsSlice.reducer;

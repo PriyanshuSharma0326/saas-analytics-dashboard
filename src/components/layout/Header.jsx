@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../services/firebase";
 import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../context/ThemeContext";
 
 const getInitials = (name) => {
     if (!name) return "";
@@ -54,6 +55,7 @@ const Header = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { user } = useAuth();
+    const { darkMode, toggleDarkMode } = useTheme();
 
     const [open, setOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -89,7 +91,7 @@ const Header = () => {
     };
 
     return (
-        <header className="bg-white/70 backdrop-blur-md border-b border-indigo-100/80 sticky top-0 z-20">
+        <header className="bg-white backdrop-blur-md border-b border-indigo-100 sticky top-0 z-20">
             <div className="h-[68px] px-6 flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3 min-w-0">
                     <div className="min-w-0">
@@ -132,6 +134,23 @@ const Header = () => {
                         <span className="absolute -top-1 -right-1 w-4 h-4 text-[9px] font-bold bg-indigo-500 text-white rounded-full flex items-center justify-center leading-none">
                             3
                         </span>
+                    </button>
+
+                    <div className="w-px h-6 bg-slate-200" />
+
+                    <button
+                        onClick={toggleDarkMode}
+                        className="relative w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-500 hover:bg-indigo-50 hover:border-indigo-200 hover:text-indigo-500 transition-all duration-150 cursor-pointer"
+                    >
+                        {darkMode ? (
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                        ) : (
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                            </svg>
+                        )}
                     </button>
 
                     <div className="w-px h-6 bg-slate-200" />

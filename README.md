@@ -35,6 +35,7 @@ This project simulates a production-style SaaS analytics interface with dynamic 
 - Route-aware header
 - Active sidebar navigation
 - Modern SaaS design system
+- Light / Dark mode
 
 ---
 
@@ -114,6 +115,7 @@ No backend required.
 - Count-up animations
 - Modal workflows
 - Reusable component architecture
+- Theme switching (Light / Dark)
 
 ### Purpose
 

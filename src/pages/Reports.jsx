@@ -5,6 +5,7 @@ import ExportModal from "../components/modals/ExportModal";
 import { transactionsData } from "../services/mockData";
 import { filterTransactions } from "../utils/filterTransactions";
 import useCountUp from "../hooks/useCountUp";
+import SectionCard from "../components/layout/SectionCard";
 
 const Reports = () => {
     const [filters, setFilters] = useState({
@@ -39,14 +40,10 @@ const Reports = () => {
 
     return (
         <main className="p-6">
-            <div className="mb-6">
-                <h2 className="text-2xl font-semibold tracking-tight text-slate-900">
-                    Reports
-                </h2>
-                <p className="text-sm text-slate-500">
-                    Detailed financial & performance breakdown
-                </p>
-            </div>
+            <SectionCard
+                title="Reports"
+                description="Detailed financial & performance breakdown"
+            />
 
             <div className="grid grid-cols-3 gap-4 mb-6">
                 <MetricCard label="Total Revenue" value={totalRevenue} prefix="₹" />
@@ -124,7 +121,7 @@ const Reports = () => {
             </div>
 
             <div className="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
-                <h3 className="text-sm font-medium text-slate-600 mb-4">
+                <h3 className="text-sm font-medium text-slate-700 mb-4">
                     Transaction History
                 </h3>
 

@@ -1,19 +1,26 @@
 import useCountUp from "../../hooks/useCountUp";
 
 const MetricCard = ({ title, value, badge, isCurrency }) => {
-    const numericValue = Number(value);
+    const cleanedValue = Number(
+        String(value).replace(/[^0-9.]/g, "")
+    );
 
-    const animatedValue = useCountUp(numericValue);
+    const decimals = getDecimals(value);
+
+    const animatedValue = useCountUp(
+        cleanedValue,
+        800,
+        decimals
+    );
 
     const displayValue = isCurrency
-        ? `₹${animatedValue.toLocaleString()}`
+        ? `₹${Number(animatedValue).toLocaleString("en-IN")}`
         : animatedValue.toLocaleString();
 
     return (
         <div className="
             bg-white rounded-xl p-4
             shadow-sm border border-slate-200
-
             transition-all duration-300 ease-out
             hover:shadow-md hover:-translate-y-0.5
         ">
@@ -30,6 +37,11 @@ const MetricCard = ({ title, value, badge, isCurrency }) => {
             </h3>
         </div>
     );
+};
+
+const getDecimals = (val) => {
+    const match = String(val).match(/\.(\d+)/);
+    return match ? match[1].length : 0;
 };
 
 export default MetricCard;

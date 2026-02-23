@@ -39,7 +39,7 @@ const DataTable = ({ data }) => {
         <div>
             <table className="w-full text-sm">
                 <thead>
-                    <tr className="text-left text-slate-500 border-b">
+                    <tr className="text-left text-slate-500 border-b border-slate-200">
                         <th
                             className="pb-3 cursor-pointer"
                             onClick={() => handleSort("name")}
@@ -73,6 +73,7 @@ const DataTable = ({ data }) => {
                                     <p className="text-sm font-medium">
                                         No results found
                                     </p>
+
                                     <p className="text-xs text-slate-400 mt-1">
                                         Try adjusting your filters
                                     </p>
@@ -81,7 +82,7 @@ const DataTable = ({ data }) => {
                         </tr>
                     ) : (
                         paginatedData.map((item) => (
-                            <tr key={item.id} className="border-b last:border-none">
+                            <tr key={item.id} className="border-b border-slate-200 last:border-none">
                                 <td className="py-3 text-slate-900">
                                     {item.name}
                                 </td>

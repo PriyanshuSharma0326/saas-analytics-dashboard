@@ -50,6 +50,7 @@ const Sidebar = () => {
 
                 <div>
                     <p className="text-[13px] font-bold text-slate-800 leading-tight tracking-tight">SaaS</p>
+
                     <p className="text-[10px] text-slate-400 leading-tight font-medium">Dashboard</p>
                 </div>
             </div>
@@ -98,6 +99,7 @@ const Sidebar = () => {
 
                     <div className="min-w-0">
                         <p className="text-[10px] font-semibold text-indigo-700 leading-tight">Free Plan</p>
+
                         <p className="text-[9px] text-indigo-400 leading-tight truncate">Upgrade for more features</p>
                     </div>
                 </div>

@@ -1,37 +1,26 @@
 export const revenueData = [
-    // September 2025
     { date: "2025-09-03", revenue: 800 },
     { date: "2025-09-10", revenue: 1100 },
     { date: "2025-09-17", revenue: 950 },
     { date: "2025-09-24", revenue: 1300 },
-
-    // October 2025
     { date: "2025-10-01", revenue: 1000 },
     { date: "2025-10-08", revenue: 1400 },
     { date: "2025-10-15", revenue: 1200 },
     { date: "2025-10-22", revenue: 1600 },
     { date: "2025-10-29", revenue: 1800 },
-
-    // November 2025
     { date: "2025-11-05", revenue: 1500 },
     { date: "2025-11-12", revenue: 2000 },
     { date: "2025-11-19", revenue: 1700 },
     { date: "2025-11-26", revenue: 2200 },
-
-    // December 2025
     { date: "2025-12-03", revenue: 2100 },
     { date: "2025-12-10", revenue: 2500 },
     { date: "2025-12-17", revenue: 2300 },
     { date: "2025-12-24", revenue: 2700 },
     { date: "2025-12-31", revenue: 3000 },
-
-    // January 2026
     { date: "2026-01-07", revenue: 700 },
     { date: "2026-01-14", revenue: 1100 },
     { date: "2026-01-21", revenue: 1300 },
     { date: "2026-01-28", revenue: 1600 },
-
-    // February 2026 (last 30 days)
     { date: "2026-02-01", revenue: 1500 },
     { date: "2026-02-04", revenue: 1800 },
     { date: "2026-02-07", revenue: 2000 },
@@ -45,39 +34,28 @@ export const revenueData = [
 ];
 
 export const userGrowthData = [
-    // September 2025
     { date: "2025-09-03", users: 2 },
     { date: "2025-09-10", users: 3 },
     { date: "2025-09-17", users: 4 },
     { date: "2025-09-24", users: 5 },
-
-    // October 2025
     { date: "2025-10-01", users: 3 },
     { date: "2025-10-08", users: 5 },
     { date: "2025-10-15", users: 4 },
     { date: "2025-10-22", users: 6 },
     { date: "2025-10-29", users: 7 },
-
-    // November 2025
     { date: "2025-11-05", users: 5 },
     { date: "2025-11-12", users: 8 },
     { date: "2025-11-19", users: 6 },
     { date: "2025-11-26", users: 9 },
-
-    // December 2025
     { date: "2025-12-03", users: 7 },
     { date: "2025-12-10", users: 10 },
     { date: "2025-12-17", users: 8 },
     { date: "2025-12-24", users: 11 },
     { date: "2025-12-31", users: 13 },
-
-    // January 2026
     { date: "2026-01-07", users: 3 },
     { date: "2026-01-14", users: 5 },
     { date: "2026-01-21", users: 6 },
     { date: "2026-01-28", users: 7 },
-
-    // February 2026
     { date: "2026-02-01", users: 5 },
     { date: "2026-02-04", users: 7 },
     { date: "2026-02-07", users: 8 },
@@ -141,4 +119,86 @@ export const transactionsData = [
     { id: 48, name: "CloudSync", plan: "Enterprise", revenue: 91000, status: "Active", date: "2026-02-25" },
     { id: 49, name: "DataBridge Co", plan: "Basic", revenue: 6500, status: "Inactive", date: "2025-10-16" },
     { id: 50, name: "NovaSphere", plan: "Pro", revenue: 43000, status: "Active", date: "2026-02-26" },
+];
+
+export const revenueUsersData = [
+    { date: "2025-09-03", month: "Sep", revenue: 42000, users: 320 },
+    { date: "2025-09-10", month: "Sep", revenue: 47000, users: 345 },
+    { date: "2025-09-17", month: "Sep", revenue: 44000, users: 330 },
+    { date: "2025-09-24", month: "Sep", revenue: 51000, users: 370 },
+    { date: "2025-10-01", month: "Oct", revenue: 53000, users: 390 },
+    { date: "2025-10-08", month: "Oct", revenue: 58000, users: 420 },
+    { date: "2025-10-15", month: "Oct", revenue: 55000, users: 405 },
+    { date: "2025-10-22", month: "Oct", revenue: 62000, users: 450 },
+    { date: "2025-10-29", month: "Oct", revenue: 65000, users: 470 },
+    { date: "2025-11-05", month: "Nov", revenue: 67000, users: 490 },
+    { date: "2025-11-12", month: "Nov", revenue: 72000, users: 530 },
+    { date: "2025-11-19", month: "Nov", revenue: 69000, users: 510 },
+    { date: "2025-11-26", month: "Nov", revenue: 76000, users: 560 },
+    { date: "2025-12-03", month: "Dec", revenue: 78000, users: 580 },
+    { date: "2025-12-10", month: "Dec", revenue: 85000, users: 630 },
+    { date: "2025-12-17", month: "Dec", revenue: 82000, users: 610 },
+    { date: "2025-12-24", month: "Dec", revenue: 91000, users: 670 },
+    { date: "2025-12-31", month: "Dec", revenue: 96000, users: 710 },
+    { date: "2026-01-07", month: "Jan", revenue: 72000, users: 540 },
+    { date: "2026-01-14", month: "Jan", revenue: 78000, users: 580 },
+    { date: "2026-01-21", month: "Jan", revenue: 81000, users: 600 },
+    { date: "2026-01-28", month: "Jan", revenue: 86000, users: 630 },
+    { date: "2026-02-01", month: "Feb", revenue: 88000, users: 645 },
+    { date: "2026-02-04", month: "Feb", revenue: 92000, users: 670 },
+    { date: "2026-02-07", month: "Feb", revenue: 95000, users: 690 },
+    { date: "2026-02-10", month: "Feb", revenue: 89000, users: 655 },
+    { date: "2026-02-13", month: "Feb", revenue: 98000, users: 710 },
+    { date: "2026-02-16", month: "Feb", revenue: 104000, users: 750 },
+    { date: "2026-02-19", month: "Feb", revenue: 101000, users: 730 },
+    { date: "2026-02-22", month: "Feb", revenue: 107000, users: 770 },
+];
+
+export const analyticsMetrics = [
+    { title: "Monthly Recurring Revenue", value: "₹2,48,000", change: "+12.4%", positive: true },
+    { title: "Churn Rate", value: "3.2%", change: "-0.8%", positive: true },
+    { title: "ARPU", value: "₹4,320", change: "+5.1%", positive: true },
+    { title: "Customer Lifetime Value", value: "₹18,900", change: "+9.3%", positive: true },
+    { title: "Customer Acquisition Cost", value: "₹2,140", change: "-2.7%", positive: true },
+];
+
+export const analyticsInsights = [
+    "Revenue growth primarily driven by Pro tier subscriptions.",
+    "Churn rate improving, indicating better customer retention.",
+    "ARPU increasing steadily over the last 6 months.",
+    "Enterprise customers contributing highest lifetime value.",
+    "Customer acquisition cost trending downward.",
+];
+
+export const revenueGrowthData = [
+    { date: "2025-09-03", month: "Sep", revenue: 42000 },
+    { date: "2025-09-10", month: "Sep", revenue: 47000 },
+    { date: "2025-09-17", month: "Sep", revenue: 44000 },
+    { date: "2025-09-24", month: "Sep", revenue: 51000 },
+    { date: "2025-10-01", month: "Oct", revenue: 53000 },
+    { date: "2025-10-08", month: "Oct", revenue: 58000 },
+    { date: "2025-10-15", month: "Oct", revenue: 55000 },
+    { date: "2025-10-22", month: "Oct", revenue: 62000 },
+    { date: "2025-10-29", month: "Oct", revenue: 65000 },
+    { date: "2025-11-05", month: "Nov", revenue: 67000 },
+    { date: "2025-11-12", month: "Nov", revenue: 72000 },
+    { date: "2025-11-19", month: "Nov", revenue: 69000 },
+    { date: "2025-11-26", month: "Nov", revenue: 76000 },
+    { date: "2025-12-03", month: "Dec", revenue: 78000 },
+    { date: "2025-12-10", month: "Dec", revenue: 85000 },
+    { date: "2025-12-17", month: "Dec", revenue: 82000 },
+    { date: "2025-12-24", month: "Dec", revenue: 91000 },
+    { date: "2025-12-31", month: "Dec", revenue: 96000 },
+    { date: "2026-01-07", month: "Jan", revenue: 72000 },
+    { date: "2026-01-14", month: "Jan", revenue: 78000 },
+    { date: "2026-01-21", month: "Jan", revenue: 81000 },
+    { date: "2026-01-28", month: "Jan", revenue: 86000 },
+    { date: "2026-02-01", month: "Feb", revenue: 88000 },
+    { date: "2026-02-04", month: "Feb", revenue: 92000 },
+    { date: "2026-02-07", month: "Feb", revenue: 95000 },
+    { date: "2026-02-10", month: "Feb", revenue: 89000 },
+    { date: "2026-02-13", month: "Feb", revenue: 98000 },
+    { date: "2026-02-16", month: "Feb", revenue: 104000 },
+    { date: "2026-02-19", month: "Feb", revenue: 101000 },
+    { date: "2026-02-22", month: "Feb", revenue: 107000 },
 ];

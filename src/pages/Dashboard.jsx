@@ -13,6 +13,7 @@ import FilterBar from "../components/filters/FilterBar";
 import { revenueData, transactionsData, userGrowthData } from "../services/mockData";
 import { Link } from "react-router-dom";
 import { filterTransactions } from "../utils/filterTransactions";
+import SectionCard from "../components/layout/SectionCard";
 
 const getPreviousPeriodData = (data, days) => {
     const now = new Date();
@@ -94,14 +95,10 @@ const Dashboard = () => {
 
     return (
         <main className="p-6 overflow-y-auto">
-            <div className="mb-6">
-                <h2 className="text-2xl font-semibold tracking-tight text-slate-900">
-                    Analytics Overview
-                </h2>
-                <p className="text-sm text-slate-500">
-                    Monitor business performance and growth metrics
-                </p>
-            </div>
+            <SectionCard
+                title="Analytics Overview"
+                description="Monitor business performance and growth metrics"
+            />
 
             <FilterBar filters={filters} setFilters={setFilters} />
 

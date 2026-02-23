@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useCountUp = (endValue, duration = 800) => {
+const useCountUp = (endValue, duration = 800, decimals = 0) => {
     const [value, setValue] = useState(0);
 
     useEffect(() => {
@@ -15,12 +15,18 @@ const useCountUp = (endValue, duration = 800) => {
                 return;
             }
 
-            setValue(Math.floor(start));
+            const rounded =
+                decimals > 0
+                    ? Number(start.toFixed(decimals))
+                    : Math.floor(start);
+
+            setValue(rounded);
+
             requestAnimationFrame(animate);
         };
 
         animate();
-    }, [endValue]);
+    }, [endValue, duration, decimals]);
 
     return value;
 };
