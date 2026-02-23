@@ -52,15 +52,10 @@ const RevenueChart = ({ data, dateRange = "30" }) => {
                     tick={{ fontSize: 11 }}
                     width={45}
                 />
+
                 <Tooltip
-                    formatter={(value) => [`$${value.toLocaleString()}`, "Revenue"]}
-                    labelFormatter={(label) =>
-                        new Date(label).toLocaleDateString("en-IN", {
-                            day: "numeric",
-                            month: "short",
-                            year: "numeric"
-                        })
-                    }
+                    content={<CustomTooltip />}
+                    cursor={{ stroke: "rgba(99,102,241,0.15)", strokeWidth: 1 }}
                 />
 
                 <Line
@@ -73,6 +68,23 @@ const RevenueChart = ({ data, dateRange = "30" }) => {
                 />
             </LineChart>
         </ResponsiveContainer>
+    );
+};
+
+const CustomTooltip = ({ active, payload, label }) => {
+    if (!active || !payload?.length) return null;
+
+    return (
+        <div className="bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-700 rounded-lg px-3 py-2 shadow-md text-xs">
+            <p className="text-slate-500 dark:text-gray-400 mb-1">
+                {new Date(label).toLocaleDateString("en-IN", {
+                    day: "numeric", month: "short", year: "numeric"
+                })}
+            </p>
+            <p className="text-slate-800 dark:text-gray-100 font-semibold">
+                ${payload[0].value.toLocaleString()} Revenue
+            </p>
+        </div>
     );
 };
 

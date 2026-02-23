@@ -159,6 +159,10 @@ html.dark .placeholder\:text-slate-400::placeholder {
     color: #9ca3af;
 }
 
+html.dark .recharts-tooltip-wrapper {
+    outline: none;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;

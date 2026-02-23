@@ -30,7 +30,9 @@ const formatTick = (dateStr, dateRange) => {
     return d.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
 };
 
-const RevenueUsersChart = ({ data, dateRange = "30" }) => {
+const RevenueUsersChart = ({ data = [], dateRange = "30" }) => {
+    if (!data.length) return null;
+
     const tickCount = dateRange === "7" ? 7 : 6;
     const ticks = buildTicks(data, tickCount);
 
@@ -62,19 +64,11 @@ const RevenueUsersChart = ({ data, dateRange = "30" }) => {
                 />
 
                 <Tooltip
-                    formatter={(value, name) =>
-                        name === "Revenue"
-                            ? [`₹${value.toLocaleString()}`, name]
-                            : [value, name]
-                    }
-                    labelFormatter={(label) =>
-                        new Date(label).toLocaleDateString("en-IN", {
-                            day: "numeric", month: "short", year: "numeric"
-                        })
-                    }
+                    content={<CustomTooltip />}
+                    cursor={{ fill: "rgba(99,102,241,0.06)" }}
                 />
 
-                <Legend />
+                <Legend content={<CustomLegend />} />
 
                 <Bar
                     yAxisId="right"
@@ -98,5 +92,47 @@ const RevenueUsersChart = ({ data, dateRange = "30" }) => {
         </ResponsiveContainer>
     );
 };
+
+const CustomTooltip = ({ active, payload, label }) => {
+    if (!active || !payload?.length) return null;
+
+    return (
+        <div className="bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-700 rounded-lg px-3 py-2 shadow-md text-xs">
+            <p className="text-slate-500 dark:text-gray-400 mb-2">
+                {new Date(label).toLocaleDateString("en-IN", {
+                    day: "numeric", month: "short", year: "numeric"
+                })}
+            </p>
+            {payload.map((entry) => (
+                <p
+                    key={entry.name}
+                    className="font-semibold"
+                    style={{ color: entry.color }}
+                >
+                    {entry.name === "Revenue"
+                        ? `₹${entry.value.toLocaleString()}`
+                        : entry.value
+                    } {entry.name}
+                </p>
+            ))}
+        </div>
+    );
+};
+
+const CustomLegend = ({ payload }) => (
+    <div className="flex justify-center gap-4 mt-1">
+        {payload.map((entry) => (
+            <div key={entry.value} className="flex items-center gap-1.5">
+                <span
+                    className="inline-block w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: entry.color }}
+                />
+                <span className="text-xs text-slate-600 dark:text-gray-400">
+                    {entry.value}
+                </span>
+            </div>
+        ))}
+    </div>
+);
 
 export default RevenueUsersChart;

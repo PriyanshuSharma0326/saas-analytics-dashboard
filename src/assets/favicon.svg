@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4f46e5"/>
+      <stop offset="100%" style="stop-color:#6366f1"/>
+    </linearGradient>
+    <linearGradient id="bar1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.7"/>
+    </linearGradient>
+    <linearGradient id="bar2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.9"/>
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0.5"/>
+    </linearGradient>
+    <linearGradient id="bar3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#a5b4fc;stop-opacity:1"/>
+      <stop offset="100%" style="stop-color:#a5b4fc;stop-opacity:0.6"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="32" height="32" rx="7" fill="url(#bg)"/>
+
+  <rect width="32" height="32" rx="7" fill="white" opacity="0.04"/>
+
+  <rect x="5" y="18" width="5" height="9" rx="1.5" fill="url(#bar3)"/>
+  <rect x="12.5" y="13" width="5" height="14" rx="1.5" fill="url(#bar2)"/>
+  <rect x="20" y="7" width="5" height="20" rx="1.5" fill="url(#bar1)"/>
+
+  <polyline
+    points="7.5,17 15,11 22.5,6"
+    fill="none"
+    stroke="#c7d2fe"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    opacity="0.9"
+  />
+
+  <circle cx="22.5" cy="6" r="1.8" fill="#e0e7ff"/>
+</svg>

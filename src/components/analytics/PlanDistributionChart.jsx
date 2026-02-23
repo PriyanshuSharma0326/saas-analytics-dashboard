@@ -6,7 +6,9 @@ const ALL_COLORS = {
     Enterprise: "#312e81",
 };
 
-const PlanDistributionChart = ({ data, selectedPlan }) => {
+const PlanDistributionChart = ({ data = [], selectedPlan }) => {
+    if (!data.length) return null;
+
     return (
         <ResponsiveContainer width="100%" height="100%">
             <PieChart>
@@ -30,10 +32,43 @@ const PlanDistributionChart = ({ data, selectedPlan }) => {
                     ))}
                 </Pie>
 
-                <Tooltip formatter={(value) => [`${value}%`, "Customers"]} />
-                <Legend verticalAlign="bottom" height={36} />
+                <Tooltip content={<CustomTooltip />} />
+                <Legend content={<CustomLegend />} verticalAlign="bottom" height={36} />
             </PieChart>
         </ResponsiveContainer>
+    );
+};
+
+const CustomTooltip = ({ active, payload }) => {
+    if (!active || !payload?.length) return null;
+
+    return (
+        <div className="bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-700 rounded-lg px-3 py-2 shadow-md text-xs">
+            <p className="text-slate-500 dark:text-gray-400 mb-1">
+                {payload[0].name}
+            </p>
+            <p className="text-slate-800 dark:text-gray-100 font-semibold">
+                {payload[0].value}% Customers
+            </p>
+        </div>
+    );
+};
+
+const CustomLegend = ({ payload }) => {
+    return (
+        <div className="flex justify-center gap-4 mt-2">
+            {payload.map((entry) => (
+                <div key={entry.value} className="flex items-center gap-1.5">
+                    <span
+                        className="inline-block w-2.5 h-2.5 rounded-full"
+                        style={{ backgroundColor: entry.color }}
+                    />
+                    <span className="text-xs text-slate-600 dark:text-gray-400">
+                        {entry.value}
+                    </span>
+                </div>
+            ))}
+        </div>
     );
 };
 

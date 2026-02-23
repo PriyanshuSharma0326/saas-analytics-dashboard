@@ -28,7 +28,9 @@ const formatTick = (dateStr, dateRange) => {
     return d.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
 };
 
-const AnalyticsRevenueChart = ({ data, dateRange = "30" }) => {
+const AnalyticsRevenueChart = ({ data = [], dateRange = "30" }) => {
+    if (!data.length) return null;
+
     const tickCount = dateRange === "7" ? 7 : 6;
     const ticks = buildTicks(data, tickCount);
 
@@ -52,12 +54,8 @@ const AnalyticsRevenueChart = ({ data, dateRange = "30" }) => {
                 />
 
                 <Tooltip
-                    formatter={(value) => [`₹${value.toLocaleString()}`, "Revenue"]}
-                    labelFormatter={(label) =>
-                        new Date(label).toLocaleDateString("en-IN", {
-                            day: "numeric", month: "short", year: "numeric"
-                        })
-                    }
+                    content={<CustomTooltip />}
+                    cursor={{ stroke: "rgba(99,102,241,0.15)", strokeWidth: 1 }}
                 />
 
                 <Area
@@ -70,6 +68,23 @@ const AnalyticsRevenueChart = ({ data, dateRange = "30" }) => {
                 />
             </AreaChart>
         </ResponsiveContainer>
+    );
+};
+
+const CustomTooltip = ({ active, payload, label }) => {
+    if (!active || !payload?.length) return null;
+
+    return (
+        <div className="bg-white dark:bg-gray-900 border border-slate-200 dark:border-gray-700 rounded-lg px-3 py-2 shadow-md text-xs">
+            <p className="text-slate-500 dark:text-gray-400 mb-1">
+                {new Date(label).toLocaleDateString("en-IN", {
+                    day: "numeric", month: "short", year: "numeric"
+                })}
+            </p>
+            <p className="text-slate-800 dark:text-gray-100 font-semibold">
+                ₹{payload[0].value.toLocaleString()} Revenue
+            </p>
+        </div>
     );
 };
 
