@@ -1,4 +1,14 @@
-const KpiCard = ({ title, value, change }) => {
+import useCountUp from "../../hooks/useCountUp";
+
+const KpiCard = ({ title, value, change, isCurrency }) => {
+    const cleanedValue = Number(String(value).replace(/[^0-9.]/g, ""));
+    const decimals = getDecimals(value);
+    const animatedValue = useCountUp(cleanedValue, 800, decimals);
+
+    const displayValue = isCurrency
+        ? `₹${Number(animatedValue).toLocaleString("en-IN")}`
+        : animatedValue.toLocaleString();
+
     return (
         <div className="bg-white rounded-xl p-4 shadow-sm border border-slate-200 transition-all duration-300 ease-out hover:shadow-md hover:-translate-y-0.5">
             <div className="flex justify-between items-start">
@@ -6,7 +16,7 @@ const KpiCard = ({ title, value, change }) => {
                     <p className="text-sm text-slate-500">{title}</p>
 
                     <h3 className="text-xl sm:text-2xl font-semibold text-slate-900 mt-1">
-                        {value}
+                        {displayValue}
                     </h3>
                 </div>
 
@@ -16,6 +26,11 @@ const KpiCard = ({ title, value, change }) => {
             </div>
         </div>
     );
+};
+
+const getDecimals = (val) => {
+    const match = String(val).match(/\.(\d+)/);
+    return match ? match[1].length : 0;
 };
 
 export default KpiCard;

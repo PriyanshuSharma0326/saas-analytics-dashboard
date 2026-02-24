@@ -10,6 +10,7 @@ import Settings from "../pages/Settings";
 import Login from "../pages/Login";
 import Plans from "../pages/Plans";
 import Checkout from "../pages/Checkout";
+import Error from "../pages/Error";
 
 const AppRoutes = () => {
     return (
@@ -60,6 +61,8 @@ const AppRoutes = () => {
                         <Checkout />
                     </ProtectedRoute>
                 } />
+
+                <Route path="*" element={<Error />} />
             </Routes>
         </Router>
     );
