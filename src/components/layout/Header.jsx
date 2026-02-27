@@ -124,30 +124,6 @@ const Header = ({ onMenuClick }) => {
                 </div>
 
                 <div className="flex items-center gap-2.5 shrink-0">
-                    <div className="relative hidden sm:block">
-                        <SearchIcon />
-
-                        <input
-                            placeholder="Search..."
-                            className="h-9 pl-9 pr-4 text-sm w-48 lg:w-60
-                                bg-slate-50 border border-slate-200 rounded-lg
-                                text-slate-700 placeholder-slate-400
-                                focus:outline-none focus:ring-2 focus:ring-indigo-500/20
-                                focus:border-indigo-400 focus:bg-white
-                                transition-all duration-150"
-                        />
-                    </div>
-
-                    <button className="relative w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-500 hover:bg-indigo-50 hover:border-indigo-200 hover:text-indigo-500 transition-all duration-150 cursor-pointer">
-                        <BellIcon />
-
-                        <span className="absolute -top-1 -right-1 w-4 h-4 text-[9px] font-bold bg-indigo-500 text-white rounded-full flex items-center justify-center leading-none">
-                            3
-                        </span>
-                    </button>
-
-                    <div className="w-px h-6 bg-slate-200" />
-
                     <button
                         onClick={toggleDarkMode}
                         className="relative w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 bg-slate-50 text-slate-500 hover:bg-indigo-50 hover:border-indigo-200 hover:text-indigo-500 transition-all duration-150 cursor-pointer"

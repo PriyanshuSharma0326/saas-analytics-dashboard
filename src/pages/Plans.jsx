@@ -112,8 +112,8 @@ const Plans = () => {
                 </p>
             </div>
 
-            <div className="flex-1 min-h-0 overflow-y-auto px-4 sm:px-6 lg:px-10 pb-8">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 h-full">
+            <div className="flex-1 min-h-0 overflow-y-auto px-4 sm:px-6 lg:px-10 pt-8 pb-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 h-full">
                     {planDetails.map((plan) => {
                         const isActive = currentPlan === plan.key;
 
