@@ -12,6 +12,7 @@ import { loadAnalyticsData } from "../features/analytics/analyticsSlice";
 import Skeleton from "../components/ui/Skeleton";
 import { usePlan } from "../context/PlanContext";
 import LockedOverlay from "../components/ui/LockedOverlay";
+import ChevronDown from '../assets/ChevronDown.svg';
 
 const Analytics = () => {
     const { plan } = usePlan();
@@ -161,15 +162,7 @@ const SelectFilter = ({ value, onChange, options }) => (
             ))}
         </select>
 
-        <svg
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-        >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-        </svg>
+        <img className="absolute right-3 top-1/2 -translate-y-1/2" src={ChevronDown} alt="" />
     </div>
 );
 

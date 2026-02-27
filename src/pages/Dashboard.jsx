@@ -117,6 +117,7 @@ const Dashboard = () => {
                     <h3 className="text-sm font-medium text-slate-600 mb-4">
                         Revenue Trend
                     </h3>
+
                     <div className="h-56 sm:h-64">
                         {loading ? (
                             <Skeleton className="h-full" />
@@ -133,6 +134,7 @@ const Dashboard = () => {
                     <h3 className="text-sm font-medium text-slate-600 mb-4">
                         Customer Growth
                     </h3>
+
                     <div className="h-56 sm:h-64">
                         {loading ? (
                             <Skeleton className="h-full" />
@@ -168,6 +170,7 @@ const Dashboard = () => {
                         <p className="text-sm font-medium">
                             No results found
                         </p>
+
                         <p className="text-xs text-slate-400 mt-1">
                             Try adjusting your filters
                         </p>

@@ -2,6 +2,9 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { usePlan } from "../context/PlanContext";
 import { useState } from "react";
 import Icon from '../assets/favicon.svg';
+import ChevronDown from '../assets/ChevronDown.svg';
+import Checkmark from '../assets/Checkmark.svg';
+import Spinner from '../assets/Spinner.svg';
 
 const PLAN_META = {
     premium: { name: "Premium", price: "₹999", period: "month" },
@@ -86,9 +89,7 @@ const Checkout = () => {
                     onClick={() => navigate("/plans")}
                     className="flex items-center gap-2 text-sm text-slate-500 hover:text-indigo-600 transition-colors"
                 >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-                    </svg>
+                    <img src={ChevronDown} className="rotate-90" alt="" />
                     Back to Plans
                 </button>
 
@@ -108,9 +109,7 @@ const Checkout = () => {
                     {success ? (
                         <div className="flex flex-col items-center py-8 text-center">
                             <div className="w-14 h-14 rounded-full bg-indigo-100 flex items-center justify-center mb-4">
-                                <svg className="w-7 h-7 text-indigo-600" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                                </svg>
+                                <img src={Checkmark} alt="" />
                             </div>
 
                             <h2 className="text-lg font-semibold text-slate-800 mb-1">Payment Successful!</h2>
@@ -133,11 +132,13 @@ const Checkout = () => {
                                 <div className="flex justify-between items-center">
                                     <div>
                                         <p className="text-sm font-semibold text-slate-800">{plan.name} Plan</p>
+
                                         <p className="text-xs text-slate-500">Billed monthly</p>
                                     </div>
 
                                     <span className="text-lg font-bold text-indigo-600">
                                         {plan.price}
+
                                         <span className="text-xs font-normal text-slate-400">/{plan.period}</span>
                                     </span>
                                 </div>
@@ -208,10 +209,7 @@ const Checkout = () => {
                                 >
                                     {loading ? (
                                         <>
-                                            <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                                                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                                                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-                                            </svg>
+                                            <img src={Spinner} alt="" />
                                             Processing...
                                         </>
                                     ) : (
