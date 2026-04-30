@@ -10,10 +10,11 @@ import { loadDashboardData } from "../features/analytics/analyticsSlice";
 import DataTable from "../components/table/DataTable";
 import FilterBar from "../components/filters/FilterBar";
 
-import { revenueData, transactionsData, userGrowthData } from "../services/mockData";
+import { transactionsData } from "../services/mockData";
 import { Link } from "react-router-dom";
 import { filterTransactions } from "../utils/filterTransactions";
 import SectionCard from "../components/layout/SectionCard";
+import { fillMissingDates } from "../utils/fillMissingValues";
 
 const getPreviousPeriodData = (data, days) => {
     const now = new Date();
@@ -35,12 +36,47 @@ const Dashboard = () => {
         dateRange: "30"
     });
 
-    const now = new Date();
     const dateRangeDays = Number(filters.dateRange);
 
     const { loading, error } = useSelector((state) => state.analytics);
 
     const filteredTransactions = filterTransactions(transactionsData, filters);
+
+    const rawRevenueData = Object.values(
+        filteredTransactions.reduce((acc, item) => {
+            if (!acc[item.date]) {
+                acc[item.date] = { date: item.date, revenue: 0 };
+            }
+
+            acc[item.date].revenue += item.revenue;
+
+            return acc;
+        }, {})
+    );
+
+    const revenueChartData = fillMissingDates(
+        rawRevenueData,
+        "revenue",
+        dateRangeDays,
+    );
+
+    const rawUsersData = Object.values(
+        filteredTransactions.reduce((acc, item) => {
+            if (!acc[item.date]) {
+                acc[item.date] = { date: item.date, users: 0 };
+            }
+
+            acc[item.date].users += 1;
+
+            return acc;
+        }, {})
+    );
+
+    const usersChartData = fillMissingDates(
+        rawUsersData,
+        "users",
+        dateRangeDays,
+    );
 
     const totalRevenue = filteredTransactions.reduce(
         (sum, item) => sum + item.revenue,
@@ -58,22 +94,6 @@ const Dashboard = () => {
     const conversionRate = filteredTransactions.length
         ? ((activeCustomers / filteredTransactions.length) * 100).toFixed(1)
         : 0;
-
-    const filteredRevenue = revenueData
-        .filter((item) => {
-            const diffDays =
-                (now - new Date(item.date)) / (1000 * 60 * 60 * 24);
-            return diffDays <= dateRangeDays;
-        })
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-    const filteredGrowth = userGrowthData
-        .filter((item) => {
-            const diffDays =
-                (now - new Date(item.date)) / (1000 * 60 * 60 * 24);
-            return diffDays <= dateRangeDays;
-        })
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
 
     const previousTransactions = getPreviousPeriodData(
         transactionsData,
@@ -123,7 +143,7 @@ const Dashboard = () => {
                             <Skeleton className="h-full" />
                         ) : (
                             <RevenueChart
-                                data={filteredRevenue}
+                                data={revenueChartData}
                                 dateRange={filters.dateRange}
                             />
                         )}
@@ -140,7 +160,7 @@ const Dashboard = () => {
                             <Skeleton className="h-full" />
                         ) : (
                             <GrowthChart
-                                data={filteredGrowth}
+                                data={usersChartData}
                                 dateRange={filters.dateRange}
                             />
                         )}

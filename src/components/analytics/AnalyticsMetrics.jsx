@@ -1,10 +1,9 @@
-import { analyticsMetrics } from "../../services/mockData";
 import useCountUp from "../../hooks/useCountUp";
 
-const AnalyticsMetrics = () => {
+const AnalyticsMetrics = ({ metrics }) => {
     return (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-6">
-            {analyticsMetrics.map((metric) => (
+            {metrics.map((metric) => (
                 <MetricItem key={metric.title} metric={metric} />
             ))}
         </div>

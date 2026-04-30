@@ -1,8 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { usePlan } from "../context/PlanContext";
 import Icon from '../assets/favicon.svg';
-import { planDetails } from "../utils/constants";
+import { PLAN_ORDER, planDetails } from "../utils/constants";
 import ChevronDown from '../assets/ChevronDown.svg';
+import { usePlan } from "../context/PlanContext";
+import { useAuth } from "../context/AuthContext";
+import { updateSubscription } from "../services/subscription";
+import DowngradeModal from "../components/modals/DowngradeModal";
+import { useState } from "react";
 
 const CheckIcon = () => (
     <svg className="w-4 h-4 text-indigo-500 shrink-0" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
@@ -18,14 +22,39 @@ const CrossIcon = () => (
 
 const Plans = () => {
     const navigate = useNavigate();
-    const { currentPlan, setCurrentPlan } = usePlan();
+    const { currentPlan } = usePlan();
+    const { user, setUser } = useAuth();
 
-    const handleSelect = (key) => {
-        if (key === "basic") {
-            setCurrentPlan("basic");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedPlan, setSelectedPlan] = useState(null);
+
+    const handleSelect = async (key) => {
+        const isDowngrade =
+            PLAN_ORDER[key] < PLAN_ORDER[currentPlan];
+
+        if (isDowngrade) {
+            setSelectedPlan(key);
+            setIsModalOpen(true);
             return;
         }
-        navigate(`/checkout?plan=${key}`);
+
+        if (key !== currentPlan) {
+            navigate(`/checkout?plan=${key}`);
+        }
+    };
+
+    const handleConfirmDowngrade = async () => {
+        if (!selectedPlan) return;
+
+        await updateSubscription(user.uid, selectedPlan);
+
+        setUser((prev) => ({
+            ...prev,
+            subscription: selectedPlan,
+        }));
+
+        setIsModalOpen(false);
+        setSelectedPlan(null);
     };
 
     return (
@@ -135,13 +164,13 @@ const Plans = () => {
                                     >
                                         {isActive
                                             ? "Current Plan"
-                                            : plan.key === "basic"
+                                            : plan.key === "free"
                                                 ? "Downgrade to Free"
                                                 : `Upgrade to ${plan.name}`
                                         }
                                     </button>
 
-                                    {plan.key !== "basic" && (
+                                    {plan.key !== "free" && (
                                         <p className="text-center text-xs text-slate-400 mt-2">
                                             🔒 Secure checkout · Cancel anytime
                                         </p>
@@ -152,6 +181,13 @@ const Plans = () => {
                     })}
                 </div>
             </div>
+
+            <DowngradeModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onConfirm={handleConfirmDowngrade}
+                plan={selectedPlan}
+            />
         </div>
     );
 };

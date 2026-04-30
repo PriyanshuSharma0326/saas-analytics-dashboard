@@ -1,9 +1,7 @@
 import { useState } from "react";
 import StatusBadge from "../ui/StatusBadge";
 
-const ITEMS_PER_PAGE = 3;
-
-const DataTable = ({ data }) => {
+const DataTable = ({ data, ITEMS_PER_PAGE = 5 }) => {
     const [sortKey, setSortKey] = useState(null);
     const [sortOrder, setSortOrder] = useState("asc");
     const [currentPage, setCurrentPage] = useState(1);
@@ -73,7 +71,7 @@ const DataTable = ({ data }) => {
 
                                     <td className="py-3 text-slate-600">{item.plan}</td>
 
-                                    <td className="py-3 text-slate-900">₹{item.revenue.toLocaleString()}</td>
+                                    <td className="py-3 text-slate-900">₹{item.revenue.toLocaleString("en-IN")}</td>
 
                                     <td className="py-3"><StatusBadge status={item.status} /></td>
                                 </tr>

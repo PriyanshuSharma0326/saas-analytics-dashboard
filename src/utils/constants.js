@@ -1,6 +1,6 @@
 const planDetails = [
     {
-        key: "basic",
+        key: "free",
         name: "Basic",
         price: "₹0",
         period: "/ month",
@@ -48,6 +48,56 @@ const planDetails = [
     },
 ];
 
+const PLANS = {
+    free: {
+        name: "Free",
+        analyticsLocked: true,
+        exportLocked: true,
+        dateFilterLocked: false,
+        planDistLocked: true,
+    },
+    premium: {
+        name: "Premium",
+        analyticsLocked: false,
+        exportLocked: false,
+        dateFilterLocked: false,
+        planDistLocked: true,
+    },
+    super_premium: {
+        name: "Super Premium",
+        analyticsLocked: false,
+        exportLocked: false,
+        dateFilterLocked: false,
+        planDistLocked: false,
+    },
+};
+
+const PLAN_LABELS = {
+    free: "Free Plan",
+    premium: "Premium",
+    super_premium: "Super Premium",
+};
+
+const PLAN_SUBTITLES = {
+    free: "Upgrade for more features",
+    premium: "Half data unlocked",
+    super_premium: "Full access enabled ✓",
+};
+const PLAN_META = {
+    premium: { name: "Premium", price: "₹999", period: "month" },
+    super_premium: { name: "Super Premium", price: "₹2,499", period: "month" },
+};
+const PLAN_ORDER = {
+    free: 0,
+    premium: 1,
+    super_premium: 2,
+};
+
 export {
     planDetails,
+    PLANS,
+    PLAN_LABELS,
+    PLAN_SUBTITLES,
+    PLAN_META,
+    PLAN_ORDER
 }

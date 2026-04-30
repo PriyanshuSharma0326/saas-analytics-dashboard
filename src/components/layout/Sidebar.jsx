@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { usePlan } from "../../context/PlanContext";
 import Icon from '../../assets/favicon.svg';
+import { PLAN_LABELS, PLAN_SUBTITLES } from "../../utils/constants";
 
 const navItems = [
     {
@@ -42,21 +43,9 @@ const navItems = [
     },
 ];
 
-const PLAN_LABELS = {
-    basic: "Free Plan",
-    premium: "Premium",
-    super_premium: "Super Premium",
-};
-
-const PLAN_SUBTITLES = {
-    basic: "Upgrade for more features",
-    premium: "Half data unlocked",
-    super_premium: "Full access enabled ✓",
-};
-
 const Sidebar = ({ onClose }) => {
     const { currentPlan } = usePlan();
-    const isUpgraded = currentPlan !== "basic";
+    const isUpgraded = currentPlan !== "free";
 
     return (
         <aside className="w-56 h-full bg-white border-r border-indigo-100 flex flex-col shrink-0">
@@ -132,11 +121,11 @@ const Sidebar = ({ onClose }) => {
 
                     <div className="min-w-0">
                         <p className="text-[10px] font-semibold text-indigo-700 leading-tight">
-                            {PLAN_LABELS[currentPlan]}
+                            {PLAN_LABELS[currentPlan] || "Free Plan"}
                         </p>
 
                         <p className="text-[9px] text-indigo-400 leading-tight truncate">
-                            {PLAN_SUBTITLES[currentPlan]}
+                            {PLAN_SUBTITLES[currentPlan] || "Upgrade for more features"}
                         </p>
                     </div>
                 </Link>

@@ -1,160 +1,218 @@
-export const revenueData = [
-    { date: "2025-09-03", revenue: 800 },
-    { date: "2025-09-10", revenue: 1100 },
-    { date: "2025-09-17", revenue: 950 },
-    { date: "2025-09-24", revenue: 1300 },
-    { date: "2025-10-01", revenue: 1000 },
-    { date: "2025-10-08", revenue: 1400 },
-    { date: "2025-10-15", revenue: 1200 },
-    { date: "2025-10-22", revenue: 1600 },
-    { date: "2025-10-29", revenue: 1800 },
-    { date: "2025-11-05", revenue: 1500 },
-    { date: "2025-11-12", revenue: 2000 },
-    { date: "2025-11-19", revenue: 1700 },
-    { date: "2025-11-26", revenue: 2200 },
-    { date: "2025-12-03", revenue: 2100 },
-    { date: "2025-12-10", revenue: 2500 },
-    { date: "2025-12-17", revenue: 2300 },
-    { date: "2025-12-24", revenue: 2700 },
-    { date: "2025-12-31", revenue: 3000 },
-    { date: "2026-01-07", revenue: 700 },
-    { date: "2026-01-14", revenue: 1100 },
-    { date: "2026-01-21", revenue: 1300 },
-    { date: "2026-01-28", revenue: 1600 },
-    { date: "2026-02-01", revenue: 1500 },
-    { date: "2026-02-04", revenue: 1800 },
-    { date: "2026-02-07", revenue: 2000 },
-    { date: "2026-02-10", revenue: 1200 },
-    { date: "2026-02-13", revenue: 2200 },
-    { date: "2026-02-16", revenue: 2600 },
-    { date: "2026-02-19", revenue: 2400 },
-    { date: "2026-02-20", revenue: 1200 },
-    { date: "2026-02-21", revenue: 2100 },
-    { date: "2026-02-22", revenue: 1800 },
-];
+const formatDate = (date) => date.toISOString().split("T")[0];
 
-export const userGrowthData = [
-    { date: "2025-09-03", users: 2 },
-    { date: "2025-09-10", users: 3 },
-    { date: "2025-09-17", users: 4 },
-    { date: "2025-09-24", users: 5 },
-    { date: "2025-10-01", users: 3 },
-    { date: "2025-10-08", users: 5 },
-    { date: "2025-10-15", users: 4 },
-    { date: "2025-10-22", users: 6 },
-    { date: "2025-10-29", users: 7 },
-    { date: "2025-11-05", users: 5 },
-    { date: "2025-11-12", users: 8 },
-    { date: "2025-11-19", users: 6 },
-    { date: "2025-11-26", users: 9 },
-    { date: "2025-12-03", users: 7 },
-    { date: "2025-12-10", users: 10 },
-    { date: "2025-12-17", users: 8 },
-    { date: "2025-12-24", users: 11 },
-    { date: "2025-12-31", users: 13 },
-    { date: "2026-01-07", users: 3 },
-    { date: "2026-01-14", users: 5 },
-    { date: "2026-01-21", users: 6 },
-    { date: "2026-01-28", users: 7 },
-    { date: "2026-02-01", users: 5 },
-    { date: "2026-02-04", users: 7 },
-    { date: "2026-02-07", users: 8 },
-    { date: "2026-02-10", users: 4 },
-    { date: "2026-02-13", users: 9 },
-    { date: "2026-02-16", users: 11 },
-    { date: "2026-02-19", users: 10 },
-    { date: "2026-02-20", users: 5 },
-    { date: "2026-02-21", users: 8 },
-    { date: "2026-02-22", users: 6 },
-];
+const generateDates = (days) => {
+    const data = [];
 
-export const transactionsData = [
-    { id: 1, name: "Acme Corp", plan: "Pro", revenue: 24000, status: "Active", date: "2026-02-10" },
-    { id: 2, name: "Zenith Ltd", plan: "Basic", revenue: 8000, status: "Inactive", date: "2026-02-18" },
-    { id: 3, name: "Nova Inc", plan: "Enterprise", revenue: 54000, status: "Active", date: "2025-10-22" },
-    { id: 4, name: "Orion LLC", plan: "Pro", revenue: 32000, status: "Pending", date: "2026-02-01" },
-    { id: 5, name: "Vertex Co", plan: "Basic", revenue: 12000, status: "Active", date: "2025-11-15" },
-    { id: 6, name: "Skyline Systems", plan: "Pro", revenue: 28000, status: "Active", date: "2026-02-05" },
-    { id: 7, name: "Pulse Digital", plan: "Basic", revenue: 6000, status: "Inactive", date: "2025-12-28" },
-    { id: 8, name: "Apex Solutions", plan: "Enterprise", revenue: 72000, status: "Active", date: "2026-02-12" },
-    { id: 9, name: "Nimbus Labs", plan: "Pro", revenue: 35000, status: "Active", date: "2026-02-16" },
-    { id: 10, name: "Quantum Soft", plan: "Basic", revenue: 9000, status: "Pending", date: "2025-09-05" },
-    { id: 11, name: "BluePeak Tech", plan: "Pro", revenue: 26000, status: "Active", date: "2026-02-08" },
-    { id: 12, name: "Orbit Analytics", plan: "Enterprise", revenue: 88000, status: "Active", date: "2026-02-14" },
-    { id: 13, name: "Fusion Works", plan: "Basic", revenue: 7000, status: "Inactive", date: "2025-11-19" },
-    { id: 14, name: "HyperScale Inc", plan: "Enterprise", revenue: 96000, status: "Active", date: "2026-02-20" },
-    { id: 15, name: "BrightPath Co", plan: "Pro", revenue: 31000, status: "Pending", date: "2025-10-12" },
-    { id: 16, name: "NextWave Digital", plan: "Basic", revenue: 11000, status: "Active", date: "2026-02-02" },
-    { id: 17, name: "CoreStack Labs", plan: "Pro", revenue: 27000, status: "Active", date: "2026-02-07" },
-    { id: 18, name: "Innova Systems", plan: "Enterprise", revenue: 67000, status: "Active", date: "2025-12-30" },
-    { id: 19, name: "PrimeEdge Tech", plan: "Basic", revenue: 5000, status: "Inactive", date: "2025-09-03" },
-    { id: 20, name: "Vector Dynamics", plan: "Pro", revenue: 33000, status: "Active", date: "2026-02-11" },
-    { id: 21, name: "CloudNova", plan: "Enterprise", revenue: 102000, status: "Active", date: "2026-02-21" },
-    { id: 22, name: "PixelForge", plan: "Basic", revenue: 4000, status: "Pending", date: "2025-12-25" },
-    { id: 23, name: "ZenCore Labs", plan: "Pro", revenue: 29000, status: "Active", date: "2026-02-06" },
-    { id: 24, name: "DataPulse Inc", plan: "Enterprise", revenue: 91000, status: "Active", date: "2026-02-19" },
-    { id: 25, name: "SparkBridge", plan: "Basic", revenue: 10000, status: "Active", date: "2025-11-17" },
-    { id: 26, name: "Elevate Tech", plan: "Pro", revenue: 34000, status: "Active", date: "2026-02-13" },
-    { id: 27, name: "RapidScale", plan: "Enterprise", revenue: 76000, status: "Pending", date: "2025-10-09" },
-    { id: 28, name: "OmniSoft", plan: "Basic", revenue: 8000, status: "Inactive", date: "2025-11-14" },
-    { id: 29, name: "Vertex Labs", plan: "Pro", revenue: 24000, status: "Active", date: "2026-02-09" },
-    { id: 30, name: "SignalStack", plan: "Enterprise", revenue: 83000, status: "Active", date: "2026-02-17" },
-    { id: 31, name: "BrightLayer", plan: "Basic", revenue: 6000, status: "Active", date: "2025-12-26" },
-    { id: 32, name: "CodeSphere", plan: "Pro", revenue: 31000, status: "Pending", date: "2026-02-03" },
-    { id: 33, name: "InsightFlow", plan: "Enterprise", revenue: 94000, status: "Active", date: "2026-02-22" },
-    { id: 34, name: "BlueOrbit", plan: "Basic", revenue: 9000, status: "Inactive", date: "2025-10-07" },
-    { id: 35, name: "PeakMetrics", plan: "Pro", revenue: 36000, status: "Active", date: "2026-02-15" },
-    { id: 36, name: "SyncWave", plan: "Enterprise", revenue: 68000, status: "Active", date: "2026-02-04" },
-    { id: 37, name: "AlphaGrid", plan: "Basic", revenue: 5000, status: "Pending", date: "2025-11-21" },
-    { id: 38, name: "FlowStack", plan: "Pro", revenue: 28000, status: "Active", date: "2026-02-18" },
-    { id: 39, name: "SmartPulse", plan: "Enterprise", revenue: 87000, status: "Active", date: "2026-02-23" },
-    { id: 40, name: "NimbusCore", plan: "Basic", revenue: 7000, status: "Inactive", date: "2025-09-10" },
-    { id: 41, name: "CloudBridge", plan: "Pro", revenue: 39000, status: "Active", date: "2026-02-24" },
-    { id: 42, name: "Hyperlytics", plan: "Enterprise", revenue: 99000, status: "Pending", date: "2025-12-18" },
-    { id: 43, name: "BrightAnalytics", plan: "Basic", revenue: 12000, status: "Active", date: "2026-02-06" },
-    { id: 44, name: "MetricFlow", plan: "Pro", revenue: 26000, status: "Active", date: "2026-02-21" },
-    { id: 45, name: "ZenithWorks", plan: "Enterprise", revenue: 74000, status: "Active", date: "2025-12-27" },
-    { id: 46, name: "ScaleForge", plan: "Basic", revenue: 8000, status: "Pending", date: "2025-09-04" },
-    { id: 47, name: "InsightLabs", plan: "Pro", revenue: 31000, status: "Active", date: "2026-02-14" },
-    { id: 48, name: "CloudSync", plan: "Enterprise", revenue: 91000, status: "Active", date: "2026-02-25" },
-    { id: 49, name: "DataBridge Co", plan: "Basic", revenue: 6500, status: "Inactive", date: "2025-10-16" },
-    { id: 50, name: "NovaSphere", plan: "Pro", revenue: 43000, status: "Active", date: "2026-02-26" },
-];
+    for (let i = days - 1; i >= 0; i--) {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
 
-export const revenueUsersData = [
-    { date: "2025-09-03", month: "Sep", revenue: 42000, users: 320 },
-    { date: "2025-09-10", month: "Sep", revenue: 47000, users: 345 },
-    { date: "2025-09-17", month: "Sep", revenue: 44000, users: 330 },
-    { date: "2025-09-24", month: "Sep", revenue: 51000, users: 370 },
-    { date: "2025-10-01", month: "Oct", revenue: 53000, users: 390 },
-    { date: "2025-10-08", month: "Oct", revenue: 58000, users: 420 },
-    { date: "2025-10-15", month: "Oct", revenue: 55000, users: 405 },
-    { date: "2025-10-22", month: "Oct", revenue: 62000, users: 450 },
-    { date: "2025-10-29", month: "Oct", revenue: 65000, users: 470 },
-    { date: "2025-11-05", month: "Nov", revenue: 67000, users: 490 },
-    { date: "2025-11-12", month: "Nov", revenue: 72000, users: 530 },
-    { date: "2025-11-19", month: "Nov", revenue: 69000, users: 510 },
-    { date: "2025-11-26", month: "Nov", revenue: 76000, users: 560 },
-    { date: "2025-12-03", month: "Dec", revenue: 78000, users: 580 },
-    { date: "2025-12-10", month: "Dec", revenue: 85000, users: 630 },
-    { date: "2025-12-17", month: "Dec", revenue: 82000, users: 610 },
-    { date: "2025-12-24", month: "Dec", revenue: 91000, users: 670 },
-    { date: "2025-12-31", month: "Dec", revenue: 96000, users: 710 },
-    { date: "2026-01-07", month: "Jan", revenue: 72000, users: 540 },
-    { date: "2026-01-14", month: "Jan", revenue: 78000, users: 580 },
-    { date: "2026-01-21", month: "Jan", revenue: 81000, users: 600 },
-    { date: "2026-01-28", month: "Jan", revenue: 86000, users: 630 },
-    { date: "2026-02-01", month: "Feb", revenue: 88000, users: 645 },
-    { date: "2026-02-04", month: "Feb", revenue: 92000, users: 670 },
-    { date: "2026-02-07", month: "Feb", revenue: 95000, users: 690 },
-    { date: "2026-02-10", month: "Feb", revenue: 89000, users: 655 },
-    { date: "2026-02-13", month: "Feb", revenue: 98000, users: 710 },
-    { date: "2026-02-16", month: "Feb", revenue: 104000, users: 750 },
-    { date: "2026-02-19", month: "Feb", revenue: 101000, users: 730 },
-    { date: "2026-02-22", month: "Feb", revenue: 107000, users: 770 },
-];
+        data.push({
+            date: formatDate(date)
+        });
+    }
 
-export const analyticsMetrics = [
+    return data;
+};
+
+const getRollingData = (key, generator, totalDays = 180) => {
+    const stored = localStorage.getItem(key);
+
+    if (!stored) {
+        const fresh = generator(totalDays);
+        localStorage.setItem(key, JSON.stringify(fresh));
+        return fresh;
+    }
+
+    let data = JSON.parse(stored);
+
+    if (!data || data.length === 0) {
+        const fresh = generator(totalDays);
+        localStorage.setItem(key, JSON.stringify(fresh));
+        return fresh;
+    }
+
+    const lastDate = new Date(data[data.length - 1].date);
+    const today = new Date();
+
+    const diffDays = Math.floor(
+        (today - lastDate) / (1000 * 60 * 60 * 24)
+    );
+
+    if (diffDays <= 0) return data;
+
+    for (let i = 1; i <= diffDays; i++) {
+        const date = new Date(lastDate);
+        date.setDate(date.getDate() + i);
+
+        const prev = data[data.length - 1];
+
+        data.push({
+            date: date.toISOString().split("T")[0],
+            ...generator(1, prev)[0]
+        });
+    }
+
+    data = data.slice(-totalDays);
+
+    localStorage.setItem(key, JSON.stringify(data));
+
+    return data;
+};
+
+const generateTransactionsForDate = (date) => {
+    const count = Math.floor(1 + Math.random() * 5);
+
+    return Array.from({ length: count }, (_, i) => ({
+        id: `${date}-${i}-${Math.random()}`,
+        name: `Company ${Math.floor(Math.random() * 100)}`,
+        plan: ["Basic", "Pro", "Enterprise"][
+            Math.floor(Math.random() * 3)
+        ],
+        revenue: Math.floor(5000 + Math.random() * 100000),
+        status: ["Active", "Inactive", "Pending"][
+            Math.floor(Math.random() * 3)
+        ],
+        date
+    }));
+};
+
+const getRollingTransactions = (key, totalDays = 180) => {
+    const stored = localStorage.getItem(key);
+    const today = new Date();
+
+    if (!stored) {
+        const data = [];
+
+        for (let i = totalDays - 1; i >= 0; i--) {
+            const date = new Date();
+            date.setDate(today.getDate() - i);
+
+            const dateStr = formatDate(date);
+            data.push(...generateTransactionsForDate(dateStr));
+        }
+
+        localStorage.setItem(key, JSON.stringify(data));
+        return data;
+    }
+
+    let data = JSON.parse(stored);
+
+    const lastDate = new Date(
+        data[data.length - 1].date
+    );
+
+    const diffDays = Math.floor(
+        (today - lastDate) / (1000 * 60 * 60 * 24)
+    );
+
+    if (diffDays <= 0) return data;
+
+    for (let i = 1; i <= diffDays; i++) {
+        const date = new Date(lastDate);
+        date.setDate(date.getDate() + i);
+
+        const dateStr = formatDate(date);
+        data.push(...generateTransactionsForDate(dateStr));
+    }
+
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - totalDays);
+
+    data = data.filter(
+        (item) => new Date(item.date) >= cutoff
+    );
+
+    localStorage.setItem(key, JSON.stringify(data));
+
+    return data;
+};
+
+export const revenueData = getRollingData(
+    "revenueData",
+    (days, prev) => {
+        if (!prev) {
+            return generateDates(days).map((d) => ({
+                ...d,
+                revenue: Math.floor(800 + Math.random() * 2500)
+            }));
+        }
+
+        return [
+            {
+                revenue: Math.max(
+                    500,
+                    prev.revenue +
+                        Math.floor(Math.random() * 400 - 200)
+                )
+            }
+        ];
+    }
+);
+
+export const userGrowthData = getRollingData(
+    "userGrowthData",
+    (days, prev) => {
+        if (!prev) {
+            return generateDates(days).map((d) => ({
+                ...d,
+                users: Math.floor(2 + Math.random() * 10)
+            }));
+        }
+
+        return [
+            {
+                users: Math.max(
+                    1,
+                    prev.users +
+                        Math.floor(Math.random() * 4 - 2)
+                )
+            }
+        ];
+    }
+);
+
+const revenueUsersData = getRollingData(
+    "revenueUsersData",
+    (days, prev) => {
+        if (!prev) {
+            return generateDates(days).map((d) => ({
+                ...d,
+                revenue: Math.floor(40000 + Math.random() * 70000),
+                users: Math.floor(300 + Math.random() * 500),
+                month: new Date(d.date).toLocaleString(
+                    "default",
+                    { month: "short" }
+                )
+            }));
+        }
+
+        return [
+            {
+                revenue: Math.max(
+                    20000,
+                    prev.revenue +
+                        Math.floor(Math.random() * 8000 - 4000)
+                ),
+                users: Math.max(
+                    100,
+                    prev.users +
+                        Math.floor(Math.random() * 50 - 25)
+                ),
+                month: new Date().toLocaleString("default", {
+                    month: "short"
+                })
+            }
+        ];
+    }
+);
+
+const transactionsData = getRollingTransactions(
+    "transactionsData",
+    180
+);
+
+const analyticsMetrics = [
     { title: "Monthly Recurring Revenue", value: "₹2,48,000", change: "+12.4%", positive: true },
     { title: "Churn Rate", value: "3.2%", change: "-0.8%", positive: true },
     { title: "ARPU", value: "₹4,320", change: "+5.1%", positive: true },
@@ -162,7 +220,7 @@ export const analyticsMetrics = [
     { title: "Customer Acquisition Cost", value: "₹2,140", change: "-2.7%", positive: true },
 ];
 
-export const analyticsInsights = [
+const analyticsInsights = [
     "Revenue growth primarily driven by Pro tier subscriptions.",
     "Churn rate improving, indicating better customer retention.",
     "ARPU increasing steadily over the last 6 months.",
@@ -170,35 +228,9 @@ export const analyticsInsights = [
     "Customer acquisition cost trending downward.",
 ];
 
-export const revenueGrowthData = [
-    { date: "2025-09-03", month: "Sep", revenue: 42000 },
-    { date: "2025-09-10", month: "Sep", revenue: 47000 },
-    { date: "2025-09-17", month: "Sep", revenue: 44000 },
-    { date: "2025-09-24", month: "Sep", revenue: 51000 },
-    { date: "2025-10-01", month: "Oct", revenue: 53000 },
-    { date: "2025-10-08", month: "Oct", revenue: 58000 },
-    { date: "2025-10-15", month: "Oct", revenue: 55000 },
-    { date: "2025-10-22", month: "Oct", revenue: 62000 },
-    { date: "2025-10-29", month: "Oct", revenue: 65000 },
-    { date: "2025-11-05", month: "Nov", revenue: 67000 },
-    { date: "2025-11-12", month: "Nov", revenue: 72000 },
-    { date: "2025-11-19", month: "Nov", revenue: 69000 },
-    { date: "2025-11-26", month: "Nov", revenue: 76000 },
-    { date: "2025-12-03", month: "Dec", revenue: 78000 },
-    { date: "2025-12-10", month: "Dec", revenue: 85000 },
-    { date: "2025-12-17", month: "Dec", revenue: 82000 },
-    { date: "2025-12-24", month: "Dec", revenue: 91000 },
-    { date: "2025-12-31", month: "Dec", revenue: 96000 },
-    { date: "2026-01-07", month: "Jan", revenue: 72000 },
-    { date: "2026-01-14", month: "Jan", revenue: 78000 },
-    { date: "2026-01-21", month: "Jan", revenue: 81000 },
-    { date: "2026-01-28", month: "Jan", revenue: 86000 },
-    { date: "2026-02-01", month: "Feb", revenue: 88000 },
-    { date: "2026-02-04", month: "Feb", revenue: 92000 },
-    { date: "2026-02-07", month: "Feb", revenue: 95000 },
-    { date: "2026-02-10", month: "Feb", revenue: 89000 },
-    { date: "2026-02-13", month: "Feb", revenue: 98000 },
-    { date: "2026-02-16", month: "Feb", revenue: 104000 },
-    { date: "2026-02-19", month: "Feb", revenue: 101000 },
-    { date: "2026-02-22", month: "Feb", revenue: 107000 },
-];
+export {
+    revenueUsersData,
+    transactionsData,
+    analyticsMetrics,
+    analyticsInsights
+}

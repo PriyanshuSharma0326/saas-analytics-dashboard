@@ -7,11 +7,10 @@ import { transactionsData } from "../services/mockData";
 import { filterTransactions } from "../utils/filterTransactions";
 import useCountUp from "../hooks/useCountUp";
 import SectionCard from "../components/layout/SectionCard";
-import { usePlan } from "../context/PlanContext";
+import FilterBar from "../components/filters/FilterBar";
+import { exportToCsv, exportToJson } from "../utils/exportHelpers";
 
 const Reports = () => {
-    const { plan } = usePlan();
-
     const [filters, setFilters] = useState({
         dateRange: "30",
         plan: "",
@@ -34,6 +33,17 @@ const Reports = () => {
     ).length;
 
     const handleExport = (format) => {
+        if (!filteredTransactions.length) return;
+
+        const date = new Date().toISOString().split("T")[0];
+
+        if (format === "csv") {
+            exportToCsv(filteredTransactions, `report-${date}.csv`);
+        }
+        if (format === "json") {
+            exportToJson(filteredTransactions, `report-${date}.json`);
+        }
+
         setIsExportOpen(false);
     };
 
@@ -52,65 +62,18 @@ const Reports = () => {
                 <MetricCard label="Active Deals" value={activeDeals} />
             </div>
 
-            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm mb-4">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                    <div className="flex flex-col sm:flex-row flex-wrap gap-3">
-                        <input
-                            placeholder="Search company..."
-                            value={filters.search}
-                            onChange={(e) =>
-                                setFilters(prev => ({ ...prev, search: e.target.value }))
-                            }
-                            className="w-full sm:w-auto h-10 px-3 text-sm rounded-lg border border-slate-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20"
-                        />
-
-                        <SelectFilter
-                            value={filters.plan}
-                            onChange={(value) =>
-                                setFilters(prev => ({ ...prev, plan: value }))
-                            }
-                            options={[
-                                { label: "All Plans", value: "" },
-                                { label: "Basic", value: "Basic" },
-                                { label: "Pro", value: "Pro" },
-                                { label: "Enterprise", value: "Enterprise" }
-                            ]}
-                        />
-
-                        <SelectFilter
-                            value={filters.status}
-                            onChange={(value) =>
-                                setFilters(prev => ({ ...prev, status: value }))
-                            }
-                            options={[
-                                { label: "All Status", value: "" },
-                                { label: "Active", value: "Active" },
-                                { label: "Inactive", value: "Inactive" },
-                                { label: "Pending", value: "Pending" }
-                            ]}
-                        />
-
-                        <SelectFilter
-                            value={filters.dateRange}
-                            onChange={(value) =>
-                                setFilters(prev => ({ ...prev, dateRange: value }))
-                            }
-                            options={[
-                                { label: "Last 7 Days", value: "7" },
-                                { label: "Last 30 Days", value: "30" },
-                                { label: "Last 6 Months", value: "180" }
-                            ]}
-                        />
-                    </div>
-
+            <FilterBar
+                filters={filters}
+                setFilters={setFilters}
+                rightContent={
                     <button
-                        onClick={() => setIsExportOpen(!plan.exportLocked && true)}
-                        className={`text-sm font-medium ${plan.exportLocked ? 'text-slate-400' : 'text-indigo-600 hover:text-indigo-700'} transition shrink-0`}
+                        onClick={() => setIsExportOpen(true)}
+                        className="text-sm font-medium text-indigo-600 hover:text-indigo-700"
                     >
-                        {plan.exportLocked ? 'Export Locked' : 'Export Report'}
+                        Export Report
                     </button>
-                </div>
-            </div>
+                }
+            />
 
             <div className="bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-slate-200">
                 <h3 className="text-sm font-medium text-slate-700 mb-4">
@@ -118,7 +81,7 @@ const Reports = () => {
                 </h3>
 
                 {filteredTransactions.length ? (
-                    <DataTable data={filteredTransactions} />
+                    <DataTable data={filteredTransactions} ITEMS_PER_PAGE={10} />
                 ) : (
                     <div className="flex flex-col items-center py-10 text-slate-500">
                         <p className="text-sm font-medium">No results found</p>
@@ -150,23 +113,5 @@ const MetricCard = ({ label, value, prefix = "" }) => {
         </div>
     );
 };
-
-const SelectFilter = ({ value, onChange, options }) => (
-    <div className="relative w-full sm:w-auto">
-        <select
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className="w-full sm:w-auto h-10 pl-3 pr-10 text-sm rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm transition-all duration-200 appearance-none hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
-        >
-            {options.map((opt) => (
-                <option key={opt.label} value={opt.value}>
-                    {opt.label}
-                </option>
-            ))}
-        </select>
-
-        <img className="absolute right-3 top-1/2 -translate-y-1/2" src={ChevronDown} alt="" />
-    </div>
-);
 
 export default Reports;

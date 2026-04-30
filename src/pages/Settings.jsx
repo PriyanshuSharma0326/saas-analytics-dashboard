@@ -3,10 +3,46 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import Skeleton from "../components/ui/Skeleton";
+import { updateProfile } from "firebase/auth";
+import { auth } from "../services/firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../services/firebase";
 
 const Settings = () => {
+    const [saving, setSaving] = useState(false);
     const { user, loading } = useAuth();
     const { darkMode, toggleDarkMode } = useTheme();
+    const { setUser } = useAuth();
+
+    const handleSaveProfile = async () => {
+        if (!auth.currentUser) return;
+
+        try {
+            setSaving(true);
+
+            await updateProfile(auth.currentUser, {
+                displayName: profile.name
+            });
+
+            const userRef = doc(db, "users", auth.currentUser.uid);
+
+            await updateDoc(userRef, {
+                name: profile.name
+            });
+
+            setUser(prev => ({
+                ...prev,
+                displayName: profile.name
+            }));
+
+        }
+        catch (error) {
+            console.error("Error updating name:", error);
+        }
+        finally {
+            setSaving(false);
+        }
+    };
 
     const [profile, setProfile] = useState(() => ({
         name: user?.displayName || "",
@@ -49,11 +85,22 @@ const Settings = () => {
                                 setProfile(prev => ({ ...prev, name: e.target.value }))
                             }
                         />
+
                         <Input
                             label="Email Address"
                             value={profile.email}
                             disabled
                         />
+                    </div>
+
+                    <div className="flex justify-end mt-4">
+                        <button
+                            onClick={handleSaveProfile}
+                            disabled={saving}
+                            className="text-sm font-medium px-4 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-50"
+                        >
+                            {saving ? "Saving..." : "Save Changes"}
+                        </button>
                     </div>
                 </div>
 

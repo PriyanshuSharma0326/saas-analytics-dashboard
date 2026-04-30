@@ -1,15 +1,13 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { usePlan } from "../context/PlanContext";
 import { useState } from "react";
 import Icon from '../assets/favicon.svg';
 import ChevronDown from '../assets/ChevronDown.svg';
 import Checkmark from '../assets/Checkmark.svg';
 import Spinner from '../assets/Spinner.svg';
-
-const PLAN_META = {
-    premium: { name: "Premium", price: "₹999", period: "month" },
-    super_premium: { name: "Super Premium", price: "₹2,499", period: "month" },
-};
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../services/firebase";
+import { useAuth } from "../context/AuthContext";
+import { PLAN_META } from "../utils/constants";
 
 const validate = (form) => {
     const errors = {};
@@ -43,7 +41,7 @@ const validate = (form) => {
 const Checkout = () => {
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const { setCurrentPlan } = usePlan();
+    const { user, setUser } = useAuth();
 
     const planKey = searchParams.get("plan");
     const plan = PLAN_META[planKey];
@@ -74,10 +72,20 @@ const Checkout = () => {
         }
 
         setLoading(true);
-        setTimeout(() => {
-            setCurrentPlan(planKey);
+
+        setTimeout(async () => {
+            await updateDoc(doc(db, "users", user.uid), {
+                subscription: planKey,
+            });
+
+            setUser((prev) => ({
+                ...prev,
+                subscription: planKey,
+            }));
+
             setLoading(false);
             setSuccess(true);
+
             setTimeout(() => navigate("/"), 2000);
         }, 1500);
     };

@@ -1,11 +1,11 @@
 import AnalyticsMetrics from "../components/analytics/AnalyticsMetrics";
-import AnalyticsRevenueChart from "../components/analytics/AnalyticsRevenueChart";
 import InsightsPanel from "../components/analytics/InsightsPanel";
+import AnalyticsRevenueChart from "../components/analytics/AnalyticsRevenueChart";
 import RevenueUsersChart from "../components/analytics/RevenueUsersChart";
 import PlanDistributionChart from "../components/analytics/PlanDistributionChart";
 
 import { useEffect, useState } from "react";
-import { revenueData, userGrowthData, transactionsData } from "../services/mockData";
+import { transactionsData } from "../services/mockData";
 import SectionCard from "../components/layout/SectionCard";
 import { useDispatch, useSelector } from "react-redux";
 import { loadAnalyticsData } from "../features/analytics/analyticsSlice";
@@ -13,45 +13,134 @@ import Skeleton from "../components/ui/Skeleton";
 import { usePlan } from "../context/PlanContext";
 import LockedOverlay from "../components/ui/LockedOverlay";
 import ChevronDown from '../assets/ChevronDown.svg';
+import { fillMissingDates } from "../utils/fillMissingValues";
+import { filterTransactions } from "../utils/filterTransactions";
 
 const Analytics = () => {
     const { plan } = usePlan();
 
     const dispatch = useDispatch();
     const { loading, error } = useSelector((state) => state.analytics);
-    const [dateRange, setDateRange] = useState("30");
 
-    const now = new Date();
+    const [dateRange, setDateRange] = useState("30");
     const dateRangeDays = Number(dateRange);
 
-    const filteredRevenueData = revenueData
-        .filter((item) => {
-            const diffDays = (now - new Date(item.date)) / (1000 * 60 * 60 * 24);
-            return diffDays <= dateRangeDays;
-        })
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
-
-    const filteredRevenueUsers = filteredRevenueData.map((r) => {
-        const match = userGrowthData.find((u) => u.date === r.date);
-        return { date: r.date, revenue: r.revenue, users: match ? match.users : 0 };
+    const filteredTransactions = filterTransactions(transactionsData, {
+        plan: "",
+        status: "",
+        search: "",
+        dateRange
     });
 
-    const filteredTransactions = transactionsData.filter((item) => {
-        const diffDays = (now - new Date(item.date)) / (1000 * 60 * 60 * 24);
-        return diffDays <= dateRangeDays;
-    });
+    const totalRevenue = filteredTransactions.reduce(
+        (sum, item) => sum + item.revenue,
+        0
+    );
 
-    const total = filteredTransactions.length;
+    const totalCustomers = filteredTransactions.length;
 
-    const planCounts = filteredTransactions.reduce((acc, item) => {
-        acc[item.plan] = (acc[item.plan] || 0) + 1;
-        return acc;
-    }, {});
+    const activeCustomers = filteredTransactions.filter(
+        (item) => item.status === "Active"
+    ).length;
 
-    const calculatedPlanData = ["Basic", "Pro", "Enterprise"].map((plan) => ({
-        name: plan,
-        value: total ? Math.round(((planCounts[plan] || 0) / total) * 100) : 0,
+    const churnRate = totalCustomers
+        ? (((totalCustomers - activeCustomers) / totalCustomers) * 100).toFixed(1)
+        : 0;
+
+    const arpu = totalCustomers
+        ? Math.round(totalRevenue / totalCustomers)
+        : 0;
+
+    const cac = Math.round(arpu * 0.5);
+    const ltv = arpu * 4;
+
+    const dynamicMetrics = [
+        {
+            title: "Monthly Recurring Revenue",
+            value: `₹${totalRevenue}`,
+            change: "",
+            positive: true
+        },
+        {
+            title: "Churn Rate",
+            value: `${churnRate}%`,
+            change: "",
+            positive: churnRate < 5
+        },
+        {
+            title: "ARPU",
+            value: `₹${arpu}`,
+            change: "",
+            positive: true
+        },
+        {
+            title: "Customer Lifetime Value",
+            value: `₹${ltv}`,
+            change: "",
+            positive: true
+        },
+        {
+            title: "Customer Acquisition Cost",
+            value: `₹${cac}`,
+            change: "",
+            positive: true
+        }
+    ];
+
+    const rawRevenueData = Object.values(
+        filteredTransactions.reduce((acc, item) => {
+            if (!acc[item.date]) {
+                acc[item.date] = { date: item.date, revenue: 0 };
+            }
+
+            acc[item.date].revenue += item.revenue;
+            return acc;
+        }, {})
+    );
+
+    const revenueChartData = fillMissingDates(
+        rawRevenueData,
+        "revenue",
+        dateRangeDays
+    );
+
+    const rawRevenueUsersData = Object.values(
+        filteredTransactions.reduce((acc, item) => {
+            if (!acc[item.date]) {
+                acc[item.date] = {
+                    date: item.date,
+                    revenue: 0,
+                    users: 0
+                };
+            }
+
+            acc[item.date].revenue += item.revenue;
+            acc[item.date].users += 1;
+
+            return acc;
+        }, {})
+    );
+
+    const revenueUsersChartData = fillMissingDates(
+        rawRevenueUsersData,
+        "revenue",
+        dateRangeDays
+    ).map((item) => ({
+        ...item,
+        users:
+            rawRevenueUsersData.find(d => d.date === item.date)?.users || 0
     }));
+
+    const planDistributionData = Object.values(
+        filteredTransactions.reduce((acc, item) => {
+            if (!acc[item.plan]) {
+                acc[item.plan] = { name: item.plan, value: 0 };
+            }
+
+            acc[item.plan].value += 1;
+            return acc;
+        }, {})
+    );
 
     useEffect(() => {
         dispatch(loadAnalyticsData());
@@ -64,7 +153,7 @@ const Analytics = () => {
                 description="Deep insights into business performance"
             />
 
-            <AnalyticsMetrics />
+            <AnalyticsMetrics metrics={dynamicMetrics} />
 
             <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 mb-6">
                 <div className="flex flex-wrap gap-3">
@@ -81,7 +170,9 @@ const Analytics = () => {
             </div>
 
             <div className="relative bg-white p-5 rounded-xl shadow-sm border border-slate-200 mb-6">
-                {plan.analyticsLocked && <LockedOverlay message="Analytics charts are locked on Basic" />}
+                {plan.analyticsLocked && (
+                    <LockedOverlay message={`Analytics charts are locked on ${plan.name} plan`} />
+                )}
 
                 <h3 className="text-sm font-medium text-slate-600 mb-4">
                     Revenue Trend
@@ -92,7 +183,7 @@ const Analytics = () => {
                         <Skeleton className="h-full" />
                     ) : (
                         <AnalyticsRevenueChart
-                            data={filteredRevenueData}
+                            data={revenueChartData}
                             dateRange={dateRange}
                         />
                     )}
@@ -101,8 +192,10 @@ const Analytics = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
                 <div className="relative bg-white p-5 rounded-xl shadow-sm border border-slate-200 lg:col-span-2">
-                    {plan.analyticsLocked && <LockedOverlay message="Revenue vs Users chart is locked" />}
-                    
+                    {plan.analyticsLocked && (
+                        <LockedOverlay message="Revenue vs Users chart is locked" />
+                    )}
+
                     <h3 className="text-sm font-medium text-slate-600 mb-4">
                         Revenue vs Users
                     </h3>
@@ -112,7 +205,7 @@ const Analytics = () => {
                             <Skeleton className="h-full" />
                         ) : (
                             <RevenueUsersChart
-                                data={filteredRevenueUsers}
+                                data={revenueUsersChartData}
                                 dateRange={dateRange}
                             />
                         )}
@@ -120,8 +213,10 @@ const Analytics = () => {
                 </div>
 
                 <div className="relative bg-white p-5 rounded-xl shadow-sm border border-slate-200 lg:col-span-1">
-                    {(plan.analyticsLocked || plan.planDistLocked) && <LockedOverlay message="Plan Distribution chart is locked" />}
-                    
+                    {(plan.analyticsLocked || plan.planDistLocked) && (
+                        <LockedOverlay message="Plan Distribution chart is locked" />
+                    )}
+
                     <h3 className="text-sm font-medium text-slate-600 mb-4">
                         Plan Distribution
                     </h3>
@@ -131,7 +226,7 @@ const Analytics = () => {
                             <Skeleton className="h-full" />
                         ) : (
                             <PlanDistributionChart
-                                data={calculatedPlanData}
+                                data={planDistributionData}
                                 selectedPlan=""
                             />
                         )}

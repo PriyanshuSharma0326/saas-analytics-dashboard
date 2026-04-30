@@ -3,7 +3,7 @@ export const exportToCsv = (data, filename = "report.csv") => {
 
     const headers = Object.keys(data[0]).join(",");
     const rows = data.map(obj =>
-        Object.values(obj).join(",")
+        Object.values(obj).map(val => `"${val}"`).join(",")
     );
 
     const csvContent = [headers, ...rows].join("\n");
