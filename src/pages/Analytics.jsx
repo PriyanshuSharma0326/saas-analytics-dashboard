@@ -15,6 +15,7 @@ import LockedOverlay from "../components/ui/LockedOverlay";
 import ChevronDown from '../assets/ChevronDown.svg';
 import { fillMissingDates } from "../utils/fillMissingValues";
 import { filterTransactions } from "../utils/filterTransactions";
+import SelectFilter from "../components/ui/SelectFilter";
 
 const Analytics = () => {
     const { plan } = usePlan();
@@ -242,23 +243,5 @@ const Analytics = () => {
         </main>
     );
 };
-
-const SelectFilter = ({ value, onChange, options }) => (
-    <div className="relative w-full sm:w-auto">
-        <select
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
-            className="w-full sm:w-auto h-10 pl-3 pr-10 text-sm rounded-lg border border-slate-200 bg-white text-slate-700 shadow-sm appearance-none hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500"
-        >
-            {options.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                </option>
-            ))}
-        </select>
-
-        <img className="absolute right-3 top-1/2 -translate-y-1/2" src={ChevronDown} alt="" />
-    </div>
-);
 
 export default Analytics;
