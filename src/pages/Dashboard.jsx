@@ -15,16 +15,7 @@ import { Link } from "react-router-dom";
 import { filterTransactions } from "../utils/filterTransactions";
 import SectionCard from "../components/layout/SectionCard";
 import { fillMissingDates } from "../utils/fillMissingValues";
-
-const getPreviousPeriodData = (data, days) => {
-    const now = new Date();
-
-    return data.filter((item) => {
-        const diffDays = (now - new Date(item.date)) / (1000 * 60 * 60 * 24);
-
-        return diffDays > days && diffDays <= days * 2;
-    });
-};
+import { splitPeriods, calculateChange } from "../utils/analyticsHelpers";
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -49,7 +40,6 @@ const Dashboard = () => {
             }
 
             acc[item.date].revenue += item.revenue;
-
             return acc;
         }, {})
     );
@@ -67,7 +57,6 @@ const Dashboard = () => {
             }
 
             acc[item.date].users += 1;
-
             return acc;
         }, {})
     );
@@ -78,43 +67,66 @@ const Dashboard = () => {
         dateRangeDays,
     );
 
-    const totalRevenue = filteredTransactions.reduce(
-        (sum, item) => sum + item.revenue,
-        0
-    );
-
-    const activeCustomers = filteredTransactions.filter(
-        (item) => item.status === "Active"
-    ).length;
-
-    const avgRevenue = filteredTransactions.length
-        ? Math.round(totalRevenue / filteredTransactions.length)
-        : 0;
-
-    const conversionRate = filteredTransactions.length
-        ? ((activeCustomers / filteredTransactions.length) * 100).toFixed(1)
-        : 0;
-
-    const previousTransactions = getPreviousPeriodData(
+    const { current, previous } = splitPeriods(
         transactionsData,
         dateRangeDays
     );
 
-    const previousRevenue = previousTransactions.reduce(
+    const currentFiltered = filterTransactions(current, filters, false);
+    const previousFiltered = filterTransactions(previous, filters, false);
+
+    const totalRevenue = currentFiltered.reduce(
         (sum, item) => sum + item.revenue,
         0
     );
 
-    const revenueDelta = previousRevenue
-        ? (((totalRevenue - previousRevenue) / previousRevenue) * 100).toFixed(1)
+    const totalCustomers = currentFiltered.length;
+
+    const activeCustomers = currentFiltered.filter(
+        (item) => item.status === "Active"
+    ).length;
+
+    const avgRevenue = totalCustomers
+        ? totalRevenue / totalCustomers
         : 0;
-    
+
+    const conversionRate = totalCustomers
+        ? (activeCustomers / totalCustomers) * 100
+        : 0;
+
+    const prevRevenue = previousFiltered.reduce(
+        (sum, item) => sum + item.revenue,
+        0
+    );
+
+    const prevCustomers = previousFiltered.length;
+
+    const prevActiveCustomers = previousFiltered.filter(
+        (item) => item.status === "Active"
+    ).length;
+
+    const prevAvgRevenue = prevCustomers
+        ? prevRevenue / prevCustomers
+        : 0;
+
+    const prevConversionRate = prevCustomers
+        ? (prevActiveCustomers / prevCustomers) * 100
+        : 0;
+
+    const revenueDelta = calculateChange(totalRevenue, prevRevenue);
+    const customersDelta = calculateChange(totalCustomers, prevCustomers);
+    const avgRevenueDelta = calculateChange(avgRevenue, prevAvgRevenue);
+    const conversionDelta = calculateChange(conversionRate, prevConversionRate);
+
+    const formattedAvgRevenue = Math.round(avgRevenue);
+    const formattedConversionRate = conversionRate.toFixed(1);
+
     useEffect(() => {
         dispatch(loadDashboardData());
     }, [dispatch]);
 
     return (
-        <main className="p-6 overflow-y-auto">
+        <main className="p-4 sm:p-6 overflow-y-auto">
             <SectionCard
                 title="Analytics Overview"
                 description="Monitor business performance and growth metrics"
@@ -124,11 +136,14 @@ const Dashboard = () => {
 
             <div className="mb-6">
                 <MetricsGrid
-                    totalRevenue={totalRevenue}
-                    activeCustomers={activeCustomers}
-                    avgRevenue={avgRevenue}
-                    conversionRate={conversionRate}
-                    revenueDelta={revenueDelta}
+                    totalRevenue={totalRevenue} 
+                    activeCustomers={activeCustomers} 
+                    avgRevenue={formattedAvgRevenue} 
+                    conversionRate={formattedConversionRate} 
+                    revenueDelta={revenueDelta} 
+                    customersDelta={customersDelta} 
+                    avgRevenueDelta={avgRevenueDelta} 
+                    conversionDelta={conversionDelta} 
                 />
             </div>
 

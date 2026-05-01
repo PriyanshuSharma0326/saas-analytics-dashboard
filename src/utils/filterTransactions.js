@@ -1,4 +1,4 @@
-export const filterTransactions = (data, filters) => {
+export const filterTransactions = (data, filters, applyDateFilter = true) => {
     const now = new Date();
     const dateRangeDays = Number(filters.dateRange);
 
@@ -12,10 +12,11 @@ export const filterTransactions = (data, filters) => {
         )
             return false;
 
-        const diffDays =
-            (now - new Date(item.date)) / (1000 * 60 * 60 * 24);
-
-        if (diffDays > dateRangeDays) return false;
+        if (applyDateFilter) {
+            const diffDays =
+                (now - new Date(item.date)) / (1000 * 60 * 60 * 24);
+            if (diffDays > dateRangeDays) return false;
+        }
 
         return true;
     });

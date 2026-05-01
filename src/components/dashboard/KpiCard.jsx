@@ -19,10 +19,7 @@ const KpiCard = ({ title, value, change, isCurrency }) => {
                         {displayValue}
                     </h3>
                 </div>
-
-                <span className="text-xs font-medium px-2 py-1 rounded-lg bg-green-50 text-green-600 shrink-0">
-                    {change}
-                </span>
+                {change}
             </div>
         </div>
     );

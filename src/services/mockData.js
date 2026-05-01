@@ -212,14 +212,6 @@ const transactionsData = getRollingTransactions(
     180
 );
 
-const analyticsMetrics = [
-    { title: "Monthly Recurring Revenue", value: "₹2,48,000", change: "+12.4%", positive: true },
-    { title: "Churn Rate", value: "3.2%", change: "-0.8%", positive: true },
-    { title: "ARPU", value: "₹4,320", change: "+5.1%", positive: true },
-    { title: "Customer Lifetime Value", value: "₹18,900", change: "+9.3%", positive: true },
-    { title: "Customer Acquisition Cost", value: "₹2,140", change: "-2.7%", positive: true },
-];
-
 const analyticsInsights = [
     "Revenue growth primarily driven by Pro tier subscriptions.",
     "Churn rate improving, indicating better customer retention.",
@@ -231,6 +223,5 @@ const analyticsInsights = [
 export {
     revenueUsersData,
     transactionsData,
-    analyticsMetrics,
     analyticsInsights
 }
